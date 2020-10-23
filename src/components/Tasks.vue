@@ -6,7 +6,9 @@
         <span
          @click="check(item)"
         class="material-icons">{{item.icon}}</span>
-        <span  class="ml-2" :class="{checked: item.checked}">{{item.title}}</span>
+        <span  
+            @click="viewTask(item)"
+        class="ml-2" :class="{checked: item.checked}">{{item.title}}</span>
       </li>
     </ul>
 </template>
@@ -20,6 +22,9 @@ export default {
     methods: {
         check(item){
             this.$emit('check', item)
+        },
+        viewTask(task){
+            this.$router.push({name: 'Task', params:{id: task.id}})
         }
     }
 }

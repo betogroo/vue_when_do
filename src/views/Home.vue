@@ -1,5 +1,6 @@
 <template>
   <div>
+    <NavHome />
     <div class="tasks">
        <Tasks
       @check="check"
@@ -15,76 +16,45 @@
       :items="unchecked"
     />
     </div>
-    <div class="d-flex align-items-end">
-      <div>Add</div>
-    </div>
-   
+   <div 
+    @click="addTask"
+    class="add-task">
+     <span class="material-icons md-48 text-primary">
+        control_point
+      </span>
+   </div>
   </div>
+
 </template>
 
 <script>
 
 import Tasks from '@/components/Tasks'
+import NavHome from '@/components/Nav/NavHome'
+import {mapActions, mapGetters, mapState} from 'vuex'
 export default {
   name: 'Home',
-  data(){
-    return{
-      tasks: [
-        {
-        title: 'Montar Monitor',
-        checked: false,
-        id: 1,
-        icon: 'check_box_outline_blank'
-      },
-        {
-        title: 'Montar suporte',
-        checked: false,
-        id: 2,
-        icon:'check_box_outline_blank'
-      },
-        {
-        title: 'Arrumar tomada',
-        checked: false,
-        id: 4,
-        icon:'check_box_outline_blank'
-      },
-        {
-        title: 'Arrumar tomada',
-        checked: false,
-        id: 6,
-        icon:'check_box_outline_blank'
-      },
-        {
-        title: 'Arrumar tomada',
-        checked: false,
-        id: 8,
-        icon:'check_box_outline_blank'
-      }
-    ]
-    }
-  },
   components: {
-    Tasks
+    NavHome, Tasks
   },
   methods: {
+    ...mapActions(['ActionCheck', 'ActionChangeNavbarMode']),
    check(task){
-      const i = this.tasks.findIndex(item => item.id === task.id)
-      const checked = !this.tasks[i].checked
-      const icon = checked ? 'done' : 'check_box_outline_blank'
-      this.$set(this.tasks, i, {  ...this.tasks[i], checked, icon })
-      console.log(this.tasks)
+     this.ActionCheck(task)
     },
-      edit(task){
-      alert(`Abrir uma janela para editar a task número ${task.id}`)
+    addTask(){
+      this.$router.push('AddTask')
+    },
+    changeNavbarMode(mode){
+      this.ActionChangeNavbarMode(mode)
     }
   },
   computed :{
-    checked(){
-      return this.tasks.filter(item => item.checked === false)
-    },    
-    unchecked(){
-      return this.tasks.filter(item => item.checked === true)
-    }    
+   ...mapState(['tasks']),
+    ...mapGetters(['checked', 'unchecked'])
+  },
+  beforeMount(){
+    this.changeNavbarMode('Home')
   }
 }
 </script>
@@ -97,5 +67,11 @@ export default {
     padding: 0.15rem !important;
     background-color: lightgray;
     color: gray
+  }
+  .add-task{
+    margin: 20px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
   }
 </style>
