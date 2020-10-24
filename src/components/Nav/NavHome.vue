@@ -28,35 +28,48 @@
            </div>
            
         </div>
+        <template v-if="sidebarAcountsOpen">
+            <ul 
+                
+                class="list-unstyled font-weight-bold">
+                <li class="text-reset">luizhumberto@gmail.com</li>
+                <li class="text-reset">Conta Local</li>
+                <li class="text-reset">Adicionar Conta</li>
+            
+                <button @click="toggleSidebar">Fechar</button>
+            </ul>
+        </template>
+        <template v-else>
         <ul 
-            v-if="sidebarAcountsOpen"
-            class="list-unstyled font-weight-bold">
-            <li class="text-reset">luizhumberto@gmail.com</li>
-            <li class="text-reset">Conta Local</li>
-            <li class="text-reset">Adicionar Conta</li>
-           
-            <button @click="toggleSidebar">Fechar</button>
-        </ul>
-        <ul 
-            v-else
             class="list-unstyled font-weight-bold overflow-auto">
             <li class="text-reset">Todas as Tarefas</li>
             <li class="text-reset">Tareflas Finalizadas</li>
-            <li class="text-reset">Lista 1</li>
-            <li class="text-reset">Lista 2</li>
-            <li class="text-reset">Lista 3</li>
-            <li class="text-reset">Lista 4</li>
-            <li class="text-reset">Lista 5</li>
-            <li class="text-reset">Lista 6</li>
-            <li class="divider"></li>
-            <li class="text-reset">Editar Lista</li>
+        </ul>
+            <hr>
+           <div class="task-list">
+                <ul class="list-group list-group-flush mr-2">
+                    <li
+                        @click="goToList(item.id)"
+                        v-for="item in taskList" :key="item.id"
+                        :style="`border-right: 5px solid ${item.color};`"
+                        class="list-group-item d-flex align-items-center">
+                        <span class="material-icons">menu</span>
+                        <div class="p-1">{{item.name}}</div>
+                        <small class="ml-auto p-1 text-sm w-25 text-black-50">180/425</small>
+                    </li>
+                </ul>
+            </div>
+            <hr>
+        <ul class="list-unstyled font-weight-bold overflow-auto">
+            <li @click="$router.push({name: 'EditTasks'})" class="text-reset">Editar Listas</li>
             <li class="text-reset">Gerenciar Cadernos</li>
-            <li class="divider"></li>
+            <hr>
             <li class="text-reset">Atualiza para o pro</li>
             <li class="text-reset">Configurações</li>
             <li class="text-reset">Ajuda e Suporte</li>
             <button @click="toggleSidebar">Fechar</button>
         </ul>
+        </template>
       </div>
       
     <nav class="navbar bg-primary text-light">
@@ -69,7 +82,9 @@
             </div>
             <span class="navbar-brand mb-0 mr-auto ml-2 h1">Nome da Lista</span>
             <div class="d-flex justify-content-between">
-                <span class="material-icons mr-2">search</span>
+                <span 
+                    @click="$router.push({name: 'SearchTask'})"
+                    class="material-icons mr-2">search</span>
                 <NavOptions />
             </div>
         </div>
@@ -96,9 +111,13 @@ export default {
         }
     },
     computed:{
-        ...mapState(['navbarMode'])
+        ...mapState(['taskList','navbarMode'])
     },
     methods:{
+        goToList(list){
+            this.$router.push({name: 'List', params: {id: list}})
+            this.toggleSidebar()
+        },
         toggleSidebar(){
             this.sidebarOpen = !this.sidebarOpen
         },

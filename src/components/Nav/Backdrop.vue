@@ -1,7 +1,8 @@
 <template>
   <div 
     @click="$emit('toggle-sidebar')"
-  class="backdrop"></div>
+    class="backdrop">
+  </div>
 </template>
 
 <script>

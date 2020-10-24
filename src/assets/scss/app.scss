@@ -5,6 +5,17 @@
 
 *{
     font-family: 'Roboto', sans-serif;
+    .material-icons{
+        cursor: pointer;
+    }
+    .task-options{
+        padding: .50rem;
+        margin: .30rem;
+        border-bottom: 1px solid rgba(0,0,0, .5);
+        background-color: white;
+        height: 85px;
+    }
+
     }
 
 @include media-breakpoint-up(sm) {  }

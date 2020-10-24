@@ -6,29 +6,39 @@
             <div 
                 class="navbar-toggler">
                 <span  @click="back"
-                    class="material-icons">close</span>
+                    class="material-icons">arrow_back</span>
             </div>
-            <span class="navbar-brand mb-0 mr-auto ml-2 h1">Nome da Lista</span>
+            <div class="d-flex align-items-center">
+            <span class="material-icons">
+                search
+            </span>
+            <input 
+                v-model="search"
+                type="text" class="form-control form-control-sm m-1" id="formGroupExampleInput" placeholder="Procurar Tarefas">
+            </div>
             <div class="d-flex justify-content-between">
-                <span 
-                    @click="addTask(task, true)"
-                class="material-icons mr-2">done_all</span>
-                <span 
-                    @click="addTask(task, false)"
-                    class="material-icons mr-2">done</span>
-                <NavOptions />
-            </div>
+                <span
+                    @click="voiceSearch"
+                    class="material-icons mr-2">keyboard_voice</span>
+                </div>
         </div>
     </nav>
-
+        <div class="head-bar d-flex text-primary">
+            <div class="ml-2">Digite o texto na barra de pesquisa </div>
+        </div>
   </div>
 </template>
 
 <script>
-import NavOptions from '@/components/Nav/NavOptions'
+
 export default {
     name: 'Nav',
-    components: { NavOptions },
+    components: { },
+    data(){
+        return{
+        search:''
+    }
+    },
     props: {
         task: Object,
         more: Boolean
@@ -39,6 +49,9 @@ export default {
         },
         addTask(task, more){
             this.$emit('add-task', task, more)
+        },
+        voiceSearch(){
+            alert('Diga para pesquisar')
         }
     }
     
@@ -81,4 +94,13 @@ export default {
        height: 100px;
        border-bottom: 2px solid rgba($color: gray, $alpha:.5);
    }
+    .form-control{
+        border: none;
+        background-color:#0d6efd;
+        color: white;
+    }
+    ::placeholder {
+        color: rgba($color: #ffffff, $alpha: .6)
+
+    }
 </style>

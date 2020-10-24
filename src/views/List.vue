@@ -32,27 +32,32 @@
 
 import Tasks from '@/components/Tasks'
 import NavHome from '@/components/Nav/NavHome'
-import {mapActions, mapGetters, mapState} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 export default {
   name: 'Home',
   components: {
     NavHome, Tasks
   },
   methods: {
-    ...mapActions(['ActionCheck', 'ActionChangeNavbarMode']),
+    ...mapActions(['ActionCheck', 'ActionChangeNavbarMode','ActionSetList']),
    check(task){
      this.ActionCheck(task)
     },
     addTask(){
-      this.$router.push('AddTask')
+      this.$router.push({name: 'AddTask'})
     },
     changeNavbarMode(mode){
       this.ActionChangeNavbarMode(mode)
+    },
+    setList(list){
+      list = this.$route.params.id
+      this.ActionSetList(list)
     }
   },
   computed :{
-   ...mapState(['tasks']),
+   //...mapState(['tasks']),
     ...mapGetters(['checked', 'unchecked'])
+    
   },
   beforeMount(){
     this.changeNavbarMode('Home')

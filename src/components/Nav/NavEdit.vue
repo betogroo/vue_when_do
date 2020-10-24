@@ -6,29 +6,28 @@
             <div 
                 class="navbar-toggler">
                 <span  @click="back"
-                    class="material-icons">close</span>
+                    class="material-icons">arrow_back</span>
             </div>
-            <span class="navbar-brand mb-0 mr-auto ml-2 h1">Nome da Lista</span>
+            <span class="navbar-brand mb-0 mr-auto ml-2 h1">Editar Listas</span>
             <div class="d-flex justify-content-between">
-                <span 
-                    @click="addTask(task, true)"
-                class="material-icons mr-2">done_all</span>
-                <span 
-                    @click="addTask(task, false)"
-                    class="material-icons mr-2">done</span>
-                <NavOptions />
-            </div>
+                <span
+                    class="material-icons mr-2">add</span>
+                </div>
         </div>
     </nav>
-
   </div>
 </template>
 
 <script>
-import NavOptions from '@/components/Nav/NavOptions'
+
 export default {
     name: 'Nav',
-    components: { NavOptions },
+    components: {  },
+    data(){
+        return{
+        search:''
+    }
+    },
     props: {
         task: Object,
         more: Boolean
@@ -39,6 +38,9 @@ export default {
         },
         addTask(task, more){
             this.$emit('add-task', task, more)
+        },
+        voiceSearch(){
+            alert('Diga para pesquisar')
         }
     }
     
@@ -81,4 +83,13 @@ export default {
        height: 100px;
        border-bottom: 2px solid rgba($color: gray, $alpha:.5);
    }
+    .form-control{
+        border: none;
+        background-color:#0d6efd;
+        color: white;
+    }
+    ::placeholder {
+        color: rgba($color: #ffffff, $alpha: .6)
+
+    }
 </style>

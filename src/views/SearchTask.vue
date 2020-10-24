@@ -1,36 +1,20 @@
 <template>
   <div>
-      <NavAdd
-        :task="task" :more="more"
-        @add-task="addTask"
+      <NavSearch
       />
-      <div class="task-options"></div>
-        <form @submit.prevent="addTask(task)">
-            <input 
-                v-model="task.title"
-                type="text" class="form-control m-1" id="formGroupExampleInput" placeholder="Título">
-            <hr>
-            <input 
-                v-model="task.notes"
-                type="text" class="form-control m-1" id="formGroupExampleInput2" placeholder="Notas">
-            <button 
-                @click.prevent="addTask(task)"
-                class="btn btn-primary"><span class="material-icons">done</span>
-            </button>
-        </form>
+     
   </div>
 </template>
 
 <script>
-import NavAdd from '@/components/Nav/NavAdd'
+import NavSearch from '@/components/Nav/NavSearch'
 import { mapActions } from 'vuex'
 export default {
     name: 'AddTask',
-    components: { NavAdd },
+    components: { NavSearch },
     data(){
         return{
-            task: { checked: false},
-            more: ''
+            task: { checked: false}
         }
     },
     computed:{
