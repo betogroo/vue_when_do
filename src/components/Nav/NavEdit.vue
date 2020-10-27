@@ -11,6 +11,7 @@
             <span class="navbar-brand mb-0 mr-auto ml-2 h1">Editar Listas</span>
             <div class="d-flex justify-content-between">
                 <span
+                    @click="$router.push({name: 'AddList'})"
                     class="material-icons mr-2">add</span>
                 </div>
         </div>

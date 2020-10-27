@@ -27,7 +27,7 @@
 <script>
 import NavOptions from '@/components/Nav/NavOptions'
 export default {
-    name: 'Nav',
+    name: 'NavAdd',
     components: { NavOptions },
     props: {
         task: Object,

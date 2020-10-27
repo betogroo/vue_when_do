@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <OrderModal />
-
     <router-view/>
   </div>
 </template>

@@ -49,7 +49,7 @@
            <div class="task-list">
                 <ul class="list-group list-group-flush mr-2">
                     <li
-                        @click="goToList(item.id)"
+                        @click="goToList(item)"
                         v-for="item in taskList" :key="item.id"
                         :style="`border-right: 5px solid ${item.color};`"
                         class="list-group-item d-flex align-items-center">
@@ -67,7 +67,6 @@
             <li class="text-reset">Atualiza para o pro</li>
             <li class="text-reset">Configurações</li>
             <li class="text-reset">Ajuda e Suporte</li>
-            <button @click="toggleSidebar">Fechar</button>
         </ul>
         </template>
       </div>
@@ -80,7 +79,7 @@
                     @click="toggleSidebar"
                     class="material-icons">menu</span>
             </div>
-            <span class="navbar-brand mb-0 mr-auto ml-2 h1">Nome da Lista</span>
+            <span class="navbar-brand mb-0 mr-auto ml-2 h1">{{actualList.name}}</span>
             <div class="d-flex justify-content-between">
                 <span 
                     @click="$router.push({name: 'SearchTask'})"
@@ -95,7 +94,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import NavOptions from './NavOptions'
 import HeaderBar from '../HeaderBar'
 import Backdrop from './Backdrop'
@@ -111,11 +110,12 @@ export default {
         }
     },
     computed:{
-        ...mapState(['taskList','navbarMode'])
+        ...mapState(['taskList','navbarMode', 'actualList']),
+        ...mapActions(['ActionSetActualList'])
     },
     methods:{
         goToList(list){
-            this.$router.push({name: 'List', params: {id: list}})
+            this.$store.dispatch('ActionSetActualList', list)
             this.toggleSidebar()
         },
         toggleSidebar(){

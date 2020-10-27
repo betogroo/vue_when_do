@@ -43,9 +43,6 @@ export default {
     components: { NavEdit },
     computed :{
         ...mapState(['taskList'])
-    },
-    beforeMount(){
-        this.changeNavbarMode('Add')
     }
 }
 </script>

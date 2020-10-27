@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-      list:'',
+      actualList: {id: '1', name: 'Mercado', color: '#000000'},
       taskList: [
         {id: '1', name: 'Mercado', color: '#000000'},
         {id: '2', name: 'Trabalho', color: '#8600b3'},
@@ -25,7 +25,6 @@ export default new Vuex.Store({
                 {idList: 4, "checked":false,"title":"Casa de Campo","id":1641776342139,"icon":"check_box_outline_blank"},
                 {idList: 4, "checked":false,"title":"andar de Bug","id":1603465746271,"icon":"check_box_outline_blank"}
               ],
-      navbarMode: ''
   },
   mutations: {
     addTask(state, payload){
@@ -37,21 +36,19 @@ export default new Vuex.Store({
       const icon = checked ? 'check_box' : 'check_box_outline_blank'
       Vue.set(state.tasks, i, {  ...state.tasks[i], checked, icon })
     },
-    changeNavbarMode(state, payload){
-      state.navbarMode = payload
-    },
-    setList(state, payload){
-      state.list = payload
+    setActualList(state, payload){
+      state.actualList = state.taskList.find(item => item.id === payload.id)
+
+      //state.actualList = {}
+      //state.actualList = i
+      
     }
   },
   actions: {
-    ActionSetList({ commit }, payload){
-      commit('setList', payload)
-    },
-    ActionAddTask( { commit }, payload){
+    ActionAddTask( { commit, state }, payload){
       return new Promise ( () =>{
         setTimeout(()=>{
-          payload.idList = 1
+          payload.idList = parseInt(state.actualList.id)
           payload.id = Date.now()
           payload.icon = 'check_box_outline_blank'
           commit('addTask', payload)
@@ -61,24 +58,18 @@ export default new Vuex.Store({
     ActionCheck({ commit }, payload){
       commit('check', payload)
     },
-    ActionChangeNavbarMode({ commit }, payload){
-      commit('changeNavbarMode', payload)
+    ActionSetActualList( { commit }, payload){
+      commit('setActualList', payload)
     }
   },
   getters:{
-    checked:(state, getters) => {
-      //const tasks = state.tasks.filter(item => item.idList === 1)
-      return getters.filteredTasks.filter(item => item.checked === false)
+    checked:(state) => (payload) => {
+      return state.tasks.filter(item => item.checked === true &&  item.idList === payload)
+      
     },    
-    unchecked:(state, getters) => {
-      //const tasks = state.tasks.filter(item => item.idList === 1)
-      return getters.filteredTasks.filter(item => item.checked === true)
-    },
-    filteredTasks:(state, payload) => {
-      payload = 4
-      return state.tasks.filter(item => item.idList === payload)
+    unchecked:(state) => (payload)=> {
+      return state.tasks.filter(item => item.checked === false && item.idList === payload)
     }
-    
   },
   modules: {
   }

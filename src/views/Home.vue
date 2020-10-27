@@ -1,20 +1,21 @@
 <template>
   <div>
     <NavHome />
-{{}}
     <div class="tasks">
        <Tasks
       @check="check"
-      :items="checked"
+      :items="unchecked"
+      :listColor= this.actualList.color
     />
     <div 
-    v-if="unchecked.length > 0"
+    v-if="checked.length > 0"
       class="done-title d-flex align-items-center">
-        <div class="ml-2">CONCLUÍDO {{unchecked.length}}</div>
+        <div class="ml-2">CONCLUÍDO {{checked.length}}</div>
     </div>
     <Tasks
       @check="check"
-      :items="unchecked"
+      :items="checked"
+      :listColor= this.actualList.color
     />
     </div>
    <div 
@@ -32,30 +33,31 @@
 
 import Tasks from '@/components/Tasks'
 import NavHome from '@/components/Nav/NavHome'
-import {mapActions, mapGetters, mapState} from 'vuex'
+import {mapActions,  mapGetters, mapState} from 'vuex'
 export default {
   name: 'Home',
   components: {
     NavHome, Tasks
   },
   methods: {
-    ...mapActions(['ActionCheck', 'ActionChangeNavbarMode']),
+    ...mapActions(['ActionCheck']),
    check(task){
      this.ActionCheck(task)
     },
     addTask(){
       this.$router.push('AddTask')
-    },
-    changeNavbarMode(mode){
-      this.ActionChangeNavbarMode(mode)
     }
   },
   computed :{
-   ...mapState(['tasks']),
-    ...mapGetters(['checked', 'unchecked'])
-  },
-  beforeMount(){
-    this.changeNavbarMode('Home')
+    ...mapState(['tasks', 'actualList']),
+    ...mapGetters(['checked', 'unchecked']),
+    checked(){
+      return this.$store.getters['checked'](parseInt(this.actualList.id))
+    },
+    unchecked(){
+      return this.$store.getters['unchecked'](parseInt(this.actualList.id))
+    }
+    
   }
 }
 </script>

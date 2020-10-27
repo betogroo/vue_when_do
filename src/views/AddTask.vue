@@ -13,17 +13,12 @@
             <input 
                 v-model="task.notes"
                 type="text" class="form-control m-1" id="formGroupExampleInput2" placeholder="Notas">
-            <button 
-                @click.prevent="addTask(task)"
-                class="btn btn-primary"><span class="material-icons">done</span>
-            </button>
         </form>
   </div>
 </template>
 
 <script>
 import NavAdd from '@/components/Nav/NavAdd'
-import { mapActions } from 'vuex'
 export default {
     name: 'AddTask',
     components: { NavAdd },
@@ -39,10 +34,6 @@ export default {
         }
     },
     methods:{
-        ...mapActions(['ActionChangeNavbarMode']),
-        changeNavbarMode(mode){
-            this.ActionChangeNavbarMode(mode)
-        },
         addTask(task, more){
             this.$store.dispatch('ActionAddTask', task)
             this.task = {checked:false}
@@ -51,9 +42,6 @@ export default {
                 }
             
         }
-    },
-    beforeMount(){
-        this.changeNavbarMode('Add')
     }
 }
 </script>
