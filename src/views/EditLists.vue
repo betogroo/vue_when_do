@@ -25,6 +25,7 @@
     <div class="task-list">
         <ul class="list-group list-group-flush p-1">
       <li
+        @click="editList(item)"
         v-for="item in taskList" :key="item.id"
         :style="`border-left: 5px solid ${item.color};`"
         class="list-group-item d-flex align-items-center">
@@ -42,7 +43,14 @@ export default {
     name:'EditTask',
     components: { NavEdit },
     computed :{
-        ...mapState(['taskList'])
+        ...mapState(['taskList']),
+        //...mapActions(['ActionSetActualList'])
+    },
+    methods:{
+        editList(list){
+            this.$store.dispatch('ActionSetActualList', list)
+            this.$router.push({name: 'EditList'})
+        }
     }
 }
 </script>

@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div 
                 class="navbar-toggler">
-                <span  @click="back"
+                <span  @click="$router.push({name: 'Home'})"
                     class="material-icons">arrow_back</span>
             </div>
             <span class="navbar-brand mb-0 mr-auto ml-2 h1">Editar Listas</span>

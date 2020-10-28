@@ -1,13 +1,15 @@
 <template>
   <div>
-      <NavAddList
-        @addTaskList="addTaskList"
-        :taskList="taskList"
+      <NavEditList
+        @editTaskList="editTaskList"
+        @deleteTaskList="deleteTaskList"
+        :taskList="actualList"
       />
+      
         <form class="mx-2">
             <label class="form-label" for="list name">NOME DA LISTA</label>
             <input 
-                type="text" class="form-control m-1" id="listName" v-model="taskList.name">
+                type="text" class="form-control m-1" id="listName" v-model="actualList.name">
             <hr class="m-0 p-0">
         </form>
             <div class="card m-auto">
@@ -19,12 +21,12 @@
                 <li 
                     v-for="(color) in (colors)" :key="`option_${color}`"
                     class="text-reset">
-                        <input type="radio" class="btn-check" :value="color" v-model="taskList.color" :id="`option_${color}`">
+                        <input type="radio" class="btn-check" :value="color"  :id="`option_${color}`" v-model="actualList.color">
                         <label class="btn btn-danger" :for="`option_${color}`" :style="`background-color: ${color};`"></label>
                 </li>
             </ul>
                 <div class="d-flex justify-content-between align-items-center">
-                    <input  class="input-color" type="color" name="" id="input-color" v-model="taskList.color">
+                    <input  class="input-color" type="color" name="" id="input-color" v-model="actualList.color">
                      
                 </div>
             </div>
@@ -36,13 +38,12 @@
 </template>
 
 <script>
-import NavAddList from '@/components/Nav/NavAddList'
-import { mapActions } from 'vuex'
+import NavEditList from '@/components/Nav/NavEditList'
+import { mapState } from 'vuex'
 export default {
     name: 'AddTask',
     data(){
         return{
-            taskList: {name:'', color:'#000000'},
             colors: 
                [
                     "#33cc33",
@@ -61,14 +62,21 @@ export default {
             color: ''
         }
     },
-    components: { NavAddList },
+    components: { NavEditList },
+    computed:{
+        ...mapState(['actualList'])
+    },
     methods:{
-        ...mapActions(['ActionAddTaskList']),
-        addTaskList(taskList){
-            this.$store.dispatch('ActionAddTaskList', taskList)
-            this.$router.push({name: 'EditLists'})
-            console.log(taskList)
-        }
+       editTaskList(taskList){
+           this.$store.dispatch('ActionEditTaskList', taskList)
+           this.$router.push({name: 'EditLists'})
+       },
+       async deleteTaskList(taskList){
+           await this.$store.dispatch('ActionDeleteTaskList', taskList)
+           await this.$store.dispatch('ActionDeleteTasks', taskList)
+           this.$router.push({name: 'EditLists'})
+           
+       }
     }
    
 }

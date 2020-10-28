@@ -3,8 +3,10 @@
     <NavHome />
     <div class="tasks">
        <Tasks
+       @deleteTask="deleteTask"
       @check="check"
       :items="unchecked"
+      :item="item"
       :listColor= this.actualList.color
     />
     <div 
@@ -13,8 +15,10 @@
         <div class="ml-2">CONCLUÍDO {{checked.length}}</div>
     </div>
     <Tasks
+      @deleteTask="deleteTask"
       @check="check"
       :items="checked"
+      :item="item"
       :listColor= this.actualList.color
     />
     </div>
@@ -46,6 +50,9 @@ export default {
     },
     addTask(){
       this.$router.push('AddTask')
+    },
+    deleteTask(task){
+      this.$store.dispatch('ActionDeleteTask', task)
     }
   },
   computed :{

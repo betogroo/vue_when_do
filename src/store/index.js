@@ -7,10 +7,10 @@ export default new Vuex.Store({
   state: {
       actualList: {id: '1', name: 'Mercado', color: '#000000'},
       taskList: [
-        {id: '1', name: 'Mercado', color: '#000000'},
-        {id: '2', name: 'Trabalho', color: '#8600b3'},
-        {id: '3', name: 'Coisas Casa', color: '#70db70'},
-        {id: '4', name: 'Lazer', color: '#997a00'},
+        {id: 1, name: 'Mercado', color: '#000000'},
+        {id: 2, name: 'Trabalho', color: '#8600b3'},
+        {id: 3, name: 'Coisas Casa', color: '#70db70'},
+        {id: 4, name: 'Lazer', color: '#997a00'},
        
       ],
       tasks: [
@@ -27,6 +27,30 @@ export default new Vuex.Store({
               ],
   },
   mutations: {
+    deleteTaskList(state, payload){
+      const i = state.taskList.findIndex(item => item.id === payload.id)
+      state.taskList.splice(i, 1)
+    },
+    editTaskList(state, payload){
+      const i = state.taskList.findIndex(item => item.id === payload.id)
+      state.taskList[i] = {
+        name: payload.name, color: payload.color, test: i
+      }
+    },
+    addTaskList(state, payload){
+      state.taskList.push(payload)
+    },
+    deleteTasks(state, payload){
+      var i = state.tasks.findIndex(item => item.idList === payload.id)
+      while (i >= 0) {
+        state.tasks.splice(i, 1)
+        i = state.tasks.findIndex(item => item.idList === payload.id)
+      }
+    },
+    deleteTask(state, payload){
+      const i = state.tasks.findIndex(item => item.id === payload.id)
+      state.tasks.splice(i, 1)
+    },
     addTask(state, payload){
       state.tasks.push(payload)
     },
@@ -38,13 +62,29 @@ export default new Vuex.Store({
     },
     setActualList(state, payload){
       state.actualList = state.taskList.find(item => item.id === payload.id)
-
-      //state.actualList = {}
-      //state.actualList = i
-      
     }
   },
   actions: {
+    ActionDeleteTaskList({ commit }, payload){
+      commit('deleteTaskList', payload)
+    },
+    ActionEditTaskList({ commit }, payload){
+      commit('editTaskList', payload)
+    },
+    ActionDeleteTasks({ commit }, payload){
+      commit('deleteTasks', payload)
+    },
+    ActionDeleteTask({ commit }, payload){
+      commit('deleteTask', payload)
+    },
+    ActionAddTaskList( { commit }, payload){
+      return new Promise ( () =>{
+        setTimeout(()=>{
+          payload.id = Date.now()
+          commit('addTaskList', payload)
+        }, 300)
+      })
+    },
     ActionAddTask( { commit, state }, payload){
       return new Promise ( () =>{
         setTimeout(()=>{

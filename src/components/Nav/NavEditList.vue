@@ -14,10 +14,10 @@
                     
                 class="material-icons mr-2">redo</span>
                 <span 
-                   
+                   @click="deleteTaskList(taskList)"
                     class="material-icons mr-2">delete</span>
                 <span 
-                   @click="addTaskList(taskList)"
+                   @click="editTaskList(taskList)"
                     class="material-icons">check</span>
                 
             </div>
@@ -36,8 +36,11 @@ export default {
         back(){
             this.$router.go(-1)
         },
-        addTaskList(taskList){
-            this.$emit('addTaskList', taskList)
+        editTaskList(taskList){
+            this.$emit('editTaskList', taskList)
+        },
+        deleteTaskList(taskList){
+            this.$emit('deleteTaskList', taskList)
         }
     }
     

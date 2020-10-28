@@ -61,7 +61,7 @@
             </div>
             <hr>
         <ul class="list-unstyled font-weight-bold overflow-auto">
-            <li @click="$router.push({name: 'EditTasks'})" class="text-reset">Editar Listas</li>
+            <li @click="$router.push({name: 'EditLists'})" class="text-reset">Editar Listas</li>
             <li class="text-reset">Gerenciar Cadernos</li>
             <hr>
             <li class="text-reset">Atualiza para o pro</li>
@@ -94,7 +94,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import NavOptions from './NavOptions'
 import HeaderBar from '../HeaderBar'
 import Backdrop from './Backdrop'
@@ -111,7 +111,7 @@ export default {
     },
     computed:{
         ...mapState(['taskList','navbarMode', 'actualList']),
-        ...mapActions(['ActionSetActualList'])
+        //...mapActions(['ActionSetActualList'])
     },
     methods:{
         goToList(list){
@@ -157,6 +157,7 @@ export default {
 
    .sidebar ul li{
        padding: 0.3em 1em;
+       font-size: 0.9rem;
    }
 
    .sidebar ul li.divider{
