@@ -6,7 +6,6 @@
        @deleteTask="deleteTask"
       @check="check"
       :items="unchecked"
-      :item="item"
       :listColor= this.actualList.color
     />
     <div 
@@ -18,7 +17,6 @@
       @deleteTask="deleteTask"
       @check="check"
       :items="checked"
-      :item="item"
       :listColor= this.actualList.color
     />
     </div>

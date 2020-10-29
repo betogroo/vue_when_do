@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
       actualList: {id: '1', name: 'Mercado', color: '#000000'},
+      actualTask: {idList: 1, "checked":false,"title":"Maçã","id":1603473327910,"icon":"check_box_outline_blank"},
       taskList: [
         {id: 1, name: 'Mercado', color: '#000000'},
         {id: 2, name: 'Trabalho', color: '#8600b3'},
@@ -14,16 +15,16 @@ export default new Vuex.Store({
        
       ],
       tasks: [
-                {idList: 1, "checked":false,"title":"Maçã","id":1603473327910,"icon":"check_box_outline_blank"},
-                {idList: 1, "checked":false,"title":"Banana","id":1603473332177,"icon":"check_box_outline_blank"},
-                {idList: 1, "checked":false,"title":"Manga","id":1603473336494,"icon":"check_box_outline_blank"},
-                {idList: 2, "checked":false,"title":"Movimentações","id":1606789342139,"icon":"check_box_outline_blank"},
-                {idList: 2, "checked":false,"title":"Capturas","id":1603234346271,"icon":"check_box_outline_blank"},
-                {idList: 3, "checked":false,"title":"Pintar parede","id":1603476342139,"icon":"check_box_outline_blank"},
-                {idList: 3, "checked":false,"title":"Colocar Quadros","id":1603472346271,"icon":"check_box_outline_blank"},
-                {idList: 4, "checked":false,"title":"Praia","id":1603234340121,"icon":"check_box_outline_blank"},
-                {idList: 4, "checked":false,"title":"Casa de Campo","id":1641776342139,"icon":"check_box_outline_blank"},
-                {idList: 4, "checked":false,"title":"andar de Bug","id":1603465746271,"icon":"check_box_outline_blank"}
+                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Maçã","id":1603473327910,"icon":"check_box_outline_blank"},
+                {idList: 1,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"Banana","id":1603473332177,"icon":"check_box_outline_blank"},
+                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Manga","id":1603473336494,"icon":"check_box_outline_blank"},
+                {idList: 2,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Movimentações","id":1606789342139,"icon":"check_box_outline_blank"},
+                {idList: 2,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Capturas","id":1603234346271,"icon":"check_box_outline_blank"},
+                {idList: 3,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Pintar parede","id":1603476342139,"icon":"check_box_outline_blank"},
+                {idList: 3,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Colocar Quadros","id":1603472346271,"icon":"check_box_outline_blank"},
+                {idList: 4,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Praia","id":1603234340121,"icon":"check_box_outline_blank"},
+                {idList: 4,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Casa de Campo","id":1641776342139,"icon":"check_box_outline_blank"},
+                {idList: 4,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"andar de Bug","id":1603465746271,"icon":"check_box_outline_blank"}
               ],
   },
   mutations: {
@@ -36,6 +37,12 @@ export default new Vuex.Store({
       state.taskList[i] = {
         name: payload.name, color: payload.color, test: i
       }
+    },
+    editTask(state, payload){
+      const i = state.tasks.findIndex(item => item.id === payload.id)
+      const title = payload.title
+      const note = payload.note
+      Vue.set(state.tasks, i, { ...state.tasks[i], title, note })
     },
     addTaskList(state, payload){
       state.taskList.push(payload)
@@ -54,14 +61,22 @@ export default new Vuex.Store({
     addTask(state, payload){
       state.tasks.push(payload)
     },
-    check(state, payload){
+    check(state, payload){ //mudar nome
       const i = state.tasks.findIndex(item => item.id === payload.id)
       const checked = !state.tasks[i].checked
       const icon = checked ? 'check_box' : 'check_box_outline_blank'
       Vue.set(state.tasks, i, {  ...state.tasks[i], checked, icon })
     },
+    togglePriority(state, payload){
+     const i = state.tasks.findIndex(item => item.id === payload.id)
+      const priority = !state.tasks[i].priority
+      Vue.set(state.tasks, i, {...state.tasks[i], priority})
+    },
     setActualList(state, payload){
       state.actualList = state.taskList.find(item => item.id === payload.id)
+    },
+    setActualTask(state, payload){
+      state.actualTask = state.tasks.find(item => item.id === payload.id)
     }
   },
   actions: {
@@ -76,6 +91,9 @@ export default new Vuex.Store({
     },
     ActionDeleteTask({ commit }, payload){
       commit('deleteTask', payload)
+    },
+    ActionEditTask({ commit }, payload){
+      commit('editTask', payload)
     },
     ActionAddTaskList( { commit }, payload){
       return new Promise ( () =>{
@@ -95,11 +113,17 @@ export default new Vuex.Store({
         }, 300)
       })
     },
-    ActionCheck({ commit }, payload){
+    ActionCheck({ commit }, payload){ // mudar nome
       commit('check', payload)
+    },
+    ActionTogglePriority({ commit }, payload){
+    commit('togglePriority', payload)
     },
     ActionSetActualList( { commit }, payload){
       commit('setActualList', payload)
+    },
+    ActionSetActualTask({ commit }, payload){
+      commit('setActualTask', payload)
     }
   },
   getters:{
@@ -109,8 +133,12 @@ export default new Vuex.Store({
     },    
     unchecked:(state) => (payload)=> {
       return state.tasks.filter(item => item.checked === false && item.idList === payload)
+    },
+    currentTask:(state) => (payload) =>{
+      const i  =  state.tasks.findIndex( item => item.id == payload)
+      return state.tasks[i]
     }
   },
-  modules: {
-  }
+  modules: {}
+
 })

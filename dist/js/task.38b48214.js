@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["task"],{"1d21":function(e,t,n){"use strict";n.r(t);var a=function(){var e=this,t=e.$createElement;e._self._c;return e._m(0)},s=[function(){var e=this,t=e.$createElement,n=e._self._c||t;return n("div",[n("h1",[e._v(" Aqui os detalhes da task ")])])}],l={name:"Task"},r=l,u=n("2877"),c=Object(u["a"])(r,a,s,!1,null,null,null);t["default"]=c.exports}}]);
-//# sourceMappingURL=task.38b48214.js.map

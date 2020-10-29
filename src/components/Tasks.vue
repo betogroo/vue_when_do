@@ -8,8 +8,8 @@
             <span @click="check(item)" class="material-icons">{{item.icon}}</span>
             <span
                 @click="viewTask(item)" 
-                class="ml-2" 
-                :class="{checked: item.checked}">
+                class="ml-2"
+                :class="{'text-danger': item.priority, 'text-decoration-line-through text-muted': item.checked}">
                     {{item.title}}
             </span>
             </div>
@@ -39,6 +39,7 @@ export default {
             this.$emit('check', item)
         },
         viewTask(task){
+            this.$store.dispatch('ActionSetActualTask', task)
             this.$router.push({name: 'Task', params:{id: task.id}})
         },
         deleteTask(item){
@@ -50,7 +51,10 @@ export default {
 
 <style lang="scss" scoped>
     .checked{
-        color: lightgray;
+        color: lightgray!important;
         text-decoration: line-through;
+    }
+    .priority{
+        color: red;    
     }
 </style>
