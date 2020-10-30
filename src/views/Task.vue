@@ -62,7 +62,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
     .task-options{
         height: 65px;
     }
