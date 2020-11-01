@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
       actualList: {id: '1', name: 'Mercado', color: '#000000'},
-      actualTask: {idList: 1, "checked":false,"title":"Maçã","id":1603473327910,"icon":"check_box_outline_blank"},
+      //actualTask: {idList: 1, "checked":false,"title":"Maçã","id":1603473327910,"icon":"check_box_outline_blank"},
       taskList: [
         {id: 1, name: 'Mercado', color: '#000000'},
         {id: 2, name: 'Trabalho', color: '#8600b3'},
