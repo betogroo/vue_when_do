@@ -1,7 +1,12 @@
 <template>
   <div>
-      <NavEdit
-      />
+        <Navbar 
+            title="Editar Listas"
+            toggleIcon="arrow_back"
+            :items="itemsMenu"
+            @toggleAction="$router.push({name: 'Home'})"
+            @addList="addList"
+        />
     <div class="task-options">
         <div class="d-flex bd-highlight p-1">
             <div class="bd-highlight">
@@ -37,19 +42,28 @@
 </template>
 
 <script>
-import NavEdit from '@/components/Nav/NavEdit'
+import Navbar from '@/components/Nav/Navbar'
 import { mapState } from 'vuex'
 export default {
     name:'EditTask',
-    components: { NavEdit },
+    components: { Navbar },
+    data(){
+        return{
+            itemsMenu: [
+                {icon: 'add', action:'addList'}
+            ]
+        }
+    },
     computed :{
-        ...mapState(['taskList']),
-        //...mapActions(['ActionSetActualList'])
+        ...mapState(['taskList'])
     },
     methods:{
         editList(list){
             this.$store.dispatch('ActionSetActualList', list)
             this.$router.push({name: 'EditList'})
+        },
+        addList(){
+            this.$router.push({name: 'AddList'})
         }
     }
 }

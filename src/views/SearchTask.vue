@@ -8,7 +8,6 @@
 
 <script>
 import NavSearch from '@/components/Nav/NavSearch'
-import { mapActions } from 'vuex'
 export default {
     name: 'AddTask',
     components: { NavSearch },
@@ -23,10 +22,6 @@ export default {
         }
     },
     methods:{
-        ...mapActions(['ActionChangeNavbarMode']),
-        changeNavbarMode(mode){
-            this.ActionChangeNavbarMode(mode)
-        },
         addTask(task, more){
             this.$store.dispatch('ActionAddTask', task)
             this.task = {checked:false}
@@ -35,9 +30,6 @@ export default {
                 }
             
         }
-    },
-    beforeMount(){
-        this.changeNavbarMode('Add')
     }
 }
 </script>

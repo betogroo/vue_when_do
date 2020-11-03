@@ -1,11 +1,16 @@
 <template>
   <div>
-      <NavAdd
-        :task="task" :more="more"
-        @add-task="addTask"
-      />
+        <Navbar 
+            :title="actualList.name"
+            toggleIcon="close"
+            @toggleAction="$router.back()"
+            @addTask="addTask"
+            :items="itemsMenu"
+            :navOptions="true"
+            :payload="task"
+        />
       <div class="task-options"></div>
-        <form @submit.prevent="addTask(task)">
+        <form @submit.prevent="addTask(task, option)">
             <input 
                 v-model="task.title"
                 type="text" class="form-control m-1" id="formGroupExampleInput" placeholder="Título">
@@ -18,29 +23,33 @@
 </template>
 
 <script>
-import NavAdd from '@/components/Nav/NavAdd'
+import Navbar from '@/components/Nav/Navbar'
+import { mapState } from 'vuex'
 export default {
     name: 'AddTask',
-    components: { NavAdd },
+    components: { Navbar },
     data(){
         return{
-            task: { checked: false},
-            more: ''
+            itemsMenu:[
+                {icon: 'done_all', action: 'addTask', addMore: true},
+                {icon: 'done', action: 'addTask'}
+            ],
+            task: { checked: false}
         }
     },
     computed:{
+        ...mapState(['actualList']),
         tasks(){
             return this.$store.state.tasks
         }
     },
     methods:{
-        addTask(task, more){
-            this.$store.dispatch('ActionAddTask', task)
+        addTask(task, option){
+            this.$store.dispatch('ActionAddTask', task, option)
             this.task = {checked:false}
-                if (!more) {
-                    this.$router.push({name: 'Home'})
-                }
-            
+            if (!option) {
+                this.$router.push({name: 'Home'})
+            }
         }
     }
 }

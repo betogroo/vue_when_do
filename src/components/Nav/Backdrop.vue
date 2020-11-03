@@ -1,6 +1,6 @@
 <template>
   <div 
-    @click="$emit('toggle-sidebar')"
+    @click="toggleSidebar"
     class="backdrop">
   </div>
 </template>
@@ -8,8 +8,8 @@
 <script>
 export default {
   methods:{
-    beto(){
-      alert('Beto')
+    toggleSidebar(){
+    this.$store.dispatch('ActionToggleSidebar')
     }
   }
 }

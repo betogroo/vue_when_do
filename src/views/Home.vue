@@ -1,6 +1,19 @@
 <template>
   <div>
-    <NavHome />
+      <Backdrop
+        v-if="sidebarOpen"
+        />
+        <Sidebar 
+        />
+    <Navbar
+      :navOptions="true"
+      :title="actualList.name"
+      toggleIcon = "menu"
+      @toggleAction="toggleSidebar"
+      :items="itemsMenu"
+      @search="search"
+    />
+   <HeaderBar />
     <div class="tasks">
        <Tasks
        @deleteTask="deleteTask"
@@ -34,15 +47,28 @@
 <script>
 
 import Tasks from '@/components/Tasks'
-import NavHome from '@/components/Nav/NavHome'
+import Navbar from '@/components/Nav/Navbar'
+import Backdrop from '@/components/Nav/Backdrop'
+import Sidebar from '@/components/Sidebar/Sidebar'
+import HeaderBar from '@/components/HeaderBar'
 import {mapActions,  mapGetters, mapState} from 'vuex'
 export default {
   name: 'Home',
+data(){
+  return{
+    itemsMenu:[
+      {icon: 'search', action:'search'}
+    ]
+  }
+},
   components: {
-    NavHome, Tasks
+    Navbar, Tasks, Backdrop, Sidebar, HeaderBar
   },
   methods: {
-    ...mapActions(['ActionCheck']),
+    ...mapActions(['ActionCheck', 'ActionToggleSidebar']),
+    toggleSidebar(){
+      this.ActionToggleSidebar()
+    },
    check(task){
      this.ActionCheck(task)
     },
@@ -51,10 +77,16 @@ export default {
     },
     deleteTask(task){
       this.$store.dispatch('ActionDeleteTask', task)
+    },
+    search(){
+      this.$router.push({name: 'SearchTask'})
+    },
+    procurar(){
+      alert('Procurar por vózes')
     }
   },
   computed :{
-    ...mapState(['tasks', 'actualList']),
+    ...mapState(['tasks', 'actualList', 'sidebarOpen']),
     ...mapGetters(['checked', 'unchecked']),
     checked(){
       return this.$store.getters['checked'](parseInt(this.actualList.id))

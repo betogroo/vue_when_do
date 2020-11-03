@@ -1,9 +1,14 @@
 <template>
   <div>
-    <NavTask
-        @editTask="editTask"
+    <Navbar
+        :title="currentTask.title"
+        toggleIcon = "close"
+        @toggleAction="$router.back()"
+        :items="itemsMenu"
+        :payload="currentTask"
         @deleteTask="deleteTask"
-        :task="currentTask"
+        @editTask="editTask"
+        @move="move"
     />
     <div class="task-options d-flex justify-content-between align-items-center">
             <div>
@@ -28,13 +33,22 @@
 
 <script>
 
-import NavTask from '@/components/Nav/NavTask.vue'
+import Navbar from '@/components/Nav/Navbar.vue'
 import { mapState } from 'vuex'
 
 export default {
     name: 'Task',
     components: {
-        NavTask
+        Navbar
+    },
+    data(){
+        return{
+            itemsMenu:[
+        {icon: 'redo', action:'move'},
+        {icon: 'delete', action:'deleteTask'},
+        {icon: 'check', action:'editTask'}
+        ]
+        }
     },
     computed: {
     ...mapState(['actualTask']),
@@ -56,6 +70,9 @@ export default {
         editTask(task){
             this.$store.dispatch('ActionEditTask', task)
             this.$router.push({name: 'Home'})
+        },
+        move(task){
+            alert(`Vai mover a tarefa:${task.title}` )
         }
     }
 

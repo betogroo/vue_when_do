@@ -7,6 +7,11 @@ export default new Vuex.Store({
   state: {
       actualList: {id: '1', name: 'Mercado', color: '#000000'},
       //actualTask: {idList: 1, "checked":false,"title":"Maçã","id":1603473327910,"icon":"check_box_outline_blank"},
+      notebooks:[
+        {id: 1, name: 'Pessoal'},
+        {id: 2, name: 'Trabalho'},
+        {id: 3, name: 'Freelance'}
+      ],
       taskList: [
         {id: 1, name: 'Mercado', color: '#000000'},
         {id: 2, name: 'Trabalho', color: '#8600b3'},
@@ -16,7 +21,7 @@ export default new Vuex.Store({
       ],
       tasks: [
                 {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Maçã","id":1603473327910,"icon":"check_box_outline_blank"},
-                {idList: 1,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"Banana","id":1603473332177,"icon":"check_box_outline_blank"},
+                {idList: 1,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"Banana","id":1603473332177,"icon":"check_box"},
                 {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Manga","id":1603473336494,"icon":"check_box_outline_blank"},
                 {idList: 2,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Movimentações","id":1606789342139,"icon":"check_box_outline_blank"},
                 {idList: 2,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Capturas","id":1603234346271,"icon":"check_box_outline_blank"},
@@ -26,8 +31,12 @@ export default new Vuex.Store({
                 {idList: 4,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Casa de Campo","id":1641776342139,"icon":"check_box_outline_blank"},
                 {idList: 4,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"andar de Bug","id":1603465746271,"icon":"check_box_outline_blank"}
               ],
+      sidebarOpen: false
   },
   mutations: {
+    toggleSidebar(state){
+      state.sidebarOpen = !state.sidebarOpen
+    },
     deleteTaskList(state, payload){
       const i = state.taskList.findIndex(item => item.id === payload.id)
       state.taskList.splice(i, 1)
@@ -80,6 +89,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    ActionToggleSidebar({ commit }){
+      commit('toggleSidebar')
+    },
     ActionDeleteTaskList({ commit }, payload){
       commit('deleteTaskList', payload)
     },

@@ -1,10 +1,15 @@
 <template>
   <div>
-      <NavEditList
-        @editTaskList="editTaskList"
-        @deleteTaskList="deleteTaskList"
-        :taskList="actualList"
-      />
+        <Navbar 
+            title="Editar Lista"
+            toggleIcon="close"
+            @toggleAction="$router.back()"
+            :payload="actualList"
+            :items="itemsMenu"
+            @editTaskList="editTaskList"
+            @deleteTaskList="deleteTaskList"
+            @move='move'
+        />
       
         <form class="mx-2">
             <label class="form-label" for="list name">NOME DA LISTA</label>
@@ -38,12 +43,18 @@
 </template>
 
 <script>
-import NavEditList from '@/components/Nav/NavEditList'
+import Navbar from '@/components/Nav/Navbar'
 import { mapState } from 'vuex'
 export default {
     name: 'AddTask',
+    components: { Navbar },
     data(){
         return{
+            itemsMenu:[
+                {icon: 'redo', action: 'move'},
+                {icon: 'delete', action: 'deleteTaskList'},
+                {icon: 'check', action: 'editTaskList'}
+            ],
             colors: 
                [
                     "#33cc33",
@@ -62,7 +73,6 @@ export default {
             color: ''
         }
     },
-    components: { NavEditList },
     computed:{
         ...mapState(['actualList'])
     },
@@ -75,8 +85,11 @@ export default {
            await this.$store.dispatch('ActionDeleteTaskList', taskList)
            await this.$store.dispatch('ActionDeleteTasks', taskList)
            this.$router.push({name: 'EditLists'})
-           
-       }
+       },
+        move(list){
+            alert(`Vai mover a lista ${list.name}`)
+        }
+
     }
    
 }

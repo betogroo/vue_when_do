@@ -1,9 +1,13 @@
 <template>
   <div>
-      <NavAddList
-        @addTaskList="addTaskList"
-        :taskList="taskList"
-      />
+        <Navbar 
+            title="Adicionar Lista"
+            toggleIcon="close"
+            @toggleAction="$router.back()"
+            :items="itemsMenu"
+            @addTaskList="addTaskList"
+            :payload="taskList"
+        />
         <form class="mx-2">
             <label class="form-label" for="list name">NOME DA LISTA</label>
             <input 
@@ -36,12 +40,16 @@
 </template>
 
 <script>
-import NavAddList from '@/components/Nav/NavAddList'
+import Navbar from '@/components/Nav/Navbar'
 import { mapActions } from 'vuex'
 export default {
     name: 'AddTask',
+    components: { Navbar },
     data(){
         return{
+            itemsMenu:[
+              {icon: 'check', action:'addTaskList'}  
+            ],
             taskList: {name:'', color:'#000000'},
             colors: 
                [
@@ -61,13 +69,11 @@ export default {
             color: ''
         }
     },
-    components: { NavAddList },
     methods:{
         ...mapActions(['ActionAddTaskList']),
         addTaskList(taskList){
             this.$store.dispatch('ActionAddTaskList', taskList)
             this.$router.push({name: 'EditLists'})
-            console.log(taskList)
         }
     }
    

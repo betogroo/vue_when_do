@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <nav class="navbar bg-primary text-light">
         <div class="container-fluid">
             <div 

@@ -59,11 +59,11 @@
             </div>
             <hr>
         <ul class="list-group list-group-flush mr-2">
-            <li @click="$router.push({name: 'EditLists'})" class="list-group-item d-flex align-items-center">
+            <li @click="editLists" class="list-group-item d-flex align-items-center">
                 <span class="material-icons">edit</span>
                 <div class="p-1">Editar Listas</div>
             </li>
-            <li @click="$router.push({name: 'Notebooks'})" class="list-group-item d-flex align-items-center">
+            <li @click="editNotebook" class="list-group-item d-flex align-items-center">
                 <span class="material-icons">folder</span>
                 <div class="p-1">Gerenciar Cadernos</div>
             </li>
@@ -95,16 +95,27 @@ export default {
             sidebarAcountsOpen: false,
         }
     },
-    props:{
-        sidebarOpen: Boolean
-    },
     computed:{
-        ...mapState(['taskList','actualList'])
+        ...mapState(['taskList','actualList', 'sidebarOpen'])
     },
     methods:{
         goToList(list){
             this.$store.dispatch('ActionSetActualList', list)
             this.toggleSidebar()
+        },
+        editLists(){
+            this.toggleSidebar()
+            setTimeout(()=>{
+                this.$router.push({name: 'EditLists'})
+                
+            }, 500)  
+        },
+        editNotebook(){
+            this.toggleSidebar()
+            setTimeout(()=>{
+                this.$router.push({name: 'Notebooks'})
+                
+            }, 500)  
         },
         toggleSidebarAcounts(){
             this.sidebarAcountsOpen = !this.sidebarAcountsOpen
@@ -113,7 +124,7 @@ export default {
             this.$router.go(1)
         },
         toggleSidebar(){
-            this.$emit('toggleSidebar')
+            this.$store.dispatch('ActionToggleSidebar')
         }
     }
 }
