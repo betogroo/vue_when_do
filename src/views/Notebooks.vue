@@ -13,12 +13,12 @@
         v-for="item in notebooks" :key="item.id"
         class="d-flex list-group-item">
         <div class="form-check mr-2">
-          <input 
-            @change="selectNotebook(item)"
+          <input
+            @click="setNotebook(item)"
             class="form-check-input" type="radio" name="flexRadioDefault" :id="`notebook_${item.id}`">
         </div>
         <div
-          @click="editNotebook(item)"
+          @click="setNotebook(item)"
           class="ml-2">{{item.name}}</div>
         <div class="ml-auto text-muted">14</div>
       </li>
@@ -46,8 +46,9 @@ export default {
       editNotebook(notebook){
         alert(`Vai para os detalhes do Caderno ${notebook.name}`)
       },
-      selectNotebook(notebook){
-         alert(`Seleciona o  Caderno ${notebook.name}`)
+      setNotebook(notebook){
+         this.$store.dispatch('ActionSetCurrentNotebook', notebook)
+          this.$router.push({name: 'EditLists'})
       }
     },
     computed:{

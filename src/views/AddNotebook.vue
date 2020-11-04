@@ -9,7 +9,7 @@
             :payload="notebook"
         />
         <form class="mx-2">
-            <label class="form-label" for="list name">NOME DO CASDERNO</label>
+            <label class="form-label" for="list name">NOME DO CADERNO</label>
             <input 
                 type="text" class="form-control m-1" id="listName" v-model="notebook.name">
             <hr class="m-0 p-0">
@@ -27,15 +27,15 @@ export default {
     data(){
         return{
             itemsMenu:[
-              {icon: 'check', action:'addTaskList'}  
+              {icon: 'check', action:'addNotebook'}  
             ],
             notebook: {name:''}
         }
     },
     methods:{
-        ...mapActions(['ActionAddTaskList']),
-        addNoebook(notebook){
-            this.$store.dispatch('ActionAddNotebook', notebook)
+        ...mapActions(['ActionAddNotebook']),
+        addNotebook(notebook){
+            this.$store.dispatch('ActionAddNotebook', notebook, null, null)
             this.$router.push({name: 'Notebooks'})
         }
     }

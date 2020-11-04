@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-      actualList: {id: '1', name: 'Mercado', color: '#000000'},
+      actualList: {id: '1', idNotebook: 1, name: 'Mercado', color: '#000000'},
+      currentNotebook: { id: 1, name: 'Pessoal'},
       //actualTask: {idList: 1, "checked":false,"title":"Maçã","id":1603473327910,"icon":"check_box_outline_blank"},
       notebooks:[
         {id: 1, name: 'Pessoal'},
@@ -13,16 +14,22 @@ export default new Vuex.Store({
         {id: 3, name: 'Freelance'}
       ],
       taskList: [
-        {id: 1, name: 'Mercado', color: '#000000'},
-        {id: 2, name: 'Trabalho', color: '#8600b3'},
-        {id: 3, name: 'Coisas Casa', color: '#70db70'},
-        {id: 4, name: 'Lazer', color: '#997a00'},
+        {id: 1, idNotebook: 1, name: 'Mercado', color: '#000000'},
+        {id: 2, idNotebook: 2, name: 'Trabalho', color: '#8600b3'},
+        {id: 3, idNotebook: 1, name: 'Coisas Casa', color: '#70db70'},
+        {id: 4, idNotebook: 1, name: 'Lazer', color: '#997a00'},
        
       ],
       tasks: [
                 {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Maçã","id":1603473327910,"icon":"check_box_outline_blank"},
                 {idList: 1,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"Banana","id":1603473332177,"icon":"check_box"},
                 {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Manga","id":1603473336494,"icon":"check_box_outline_blank"},
+                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Pera","id":1603412327910,"icon":"check_box_outline_blank"},
+                {idList: 1,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"Uva","id":1603473332327,"icon":"check_box"},
+                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Melancia","id":1656473336494,"icon":"check_box_outline_blank"},
+                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Abóbora","id":1603476327910,"icon":"check_box_outline_blank"},
+                {idList: 1,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"leite","id":1603473892177,"icon":"check_box"},
+                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Pão","id":1603473337894,"icon":"check_box_outline_blank"},
                 {idList: 2,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Movimentações","id":1606789342139,"icon":"check_box_outline_blank"},
                 {idList: 2,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Capturas","id":1603234346271,"icon":"check_box_outline_blank"},
                 {idList: 3,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Pintar parede","id":1603476342139,"icon":"check_box_outline_blank"},
@@ -52,6 +59,9 @@ export default new Vuex.Store({
       const title = payload.title
       const note = payload.note
       Vue.set(state.tasks, i, { ...state.tasks[i], title, note })
+    },
+    addNotebook(state, payload ){
+      state.notebooks.push(payload)
     },
     addTaskList(state, payload){
       state.taskList.push(payload)
@@ -86,6 +96,9 @@ export default new Vuex.Store({
     },
     setActualTask(state, payload){
       state.actualTask = state.tasks.find(item => item.id === payload.id)
+    },
+    setCurrentNotebook(state, payload){
+      state.currentNotebook = state.notebooks.find(item => item.id === payload.id)
     }
   },
   actions: {
@@ -107,9 +120,10 @@ export default new Vuex.Store({
     ActionEditTask({ commit }, payload){
       commit('editTask', payload)
     },
-    ActionAddTaskList( { commit }, payload){
+    ActionAddTaskList( { commit, state }, payload){
       return new Promise ( () =>{
         setTimeout(()=>{
+          payload.idNotebook = parseInt(state.currentNotebook.id)
           payload.id = Date.now()
           commit('addTaskList', payload)
         }, 300)
@@ -125,6 +139,14 @@ export default new Vuex.Store({
         }, 300)
       })
     },
+    ActionAddNotebook( {commit }, payload){
+      return new Promise ( () =>{
+        setTimeout(()=>{
+          payload.id = Date.now()
+          commit('addNotebook', payload)
+        }, 300)
+      })
+    },
     ActionCheck({ commit }, payload){ // mudar nome
       commit('check', payload)
     },
@@ -136,19 +158,34 @@ export default new Vuex.Store({
     },
     ActionSetActualTask({ commit }, payload){
       commit('setActualTask', payload)
+    },
+    ActionSetCurrentNotebook({ commit }, payload){
+      commit('setCurrentNotebook', payload)
     }
   },
   getters:{
     checked:(state) => (payload) => {
-      return state.tasks.filter(item => item.checked === true &&  item.idList === payload)
+      if (payload != null) {
+        return state.tasks.filter(item => item.checked === true &&  item.idList === payload)
+      }else{
+        return state.tasks.filter(item => item.checked === true)
+      }
       
-    },    
+    },
     unchecked:(state) => (payload)=> {
-      return state.tasks.filter(item => item.checked === false && item.idList === payload)
+if (payload != null) {
+  return state.tasks.filter(item => item.checked === false && item.idList === payload)
+} else {
+  return state.tasks.filter(item => item.checked === false)
+}
+     
     },
     currentTask:(state) => (payload) =>{
       const i  =  state.tasks.findIndex( item => item.id == payload)
       return state.tasks[i]
+    },
+    taskList: state => {
+      return state.taskList.filter(item => item.idNotebook === parseInt(state.currentNotebook.id))
     }
   },
   modules: {}

@@ -33,8 +33,9 @@
         @click="editList(item)"
         v-for="item in taskList" :key="item.id"
         :style="`border-left: 5px solid ${item.color};`"
-        class="list-group-item d-flex align-items-center">
-                    {{item.name}}
+        class="list-group-item d-flex justify-content-between align-items-center">
+            <div>{{item.name}}</div>
+            <div class="text-muted">{{countChecked(item)}}/{{countUnchecked(item)}}</div>     
       </li>
     </ul>
     </div>
@@ -43,7 +44,7 @@
 
 <script>
 import Navbar from '@/components/Nav/Navbar'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
     name:'EditTask',
     components: { Navbar },
@@ -55,7 +56,8 @@ export default {
         }
     },
     computed :{
-        ...mapState(['taskList'])
+        //...mapState(['taskList'])
+        ...mapGetters(['taskList', 'checked', 'unchecked'])
     },
     methods:{
         editList(list){
@@ -64,7 +66,13 @@ export default {
         },
         addList(){
             this.$router.push({name: 'AddList'})
-        }
+        },
+        countChecked(list){
+           return this.checked(list.id).length
+        },
+        countUnchecked(list){
+           return this.unchecked(list.id).length
+        },
     }
 }
 </script>

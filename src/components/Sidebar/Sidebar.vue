@@ -35,10 +35,13 @@
         <template v-else>
         <ul 
             class="list-group list-group-flush">
-             <li  class="list-group-item d-flex align-items-center">
+             <li
+                @click="$router.push({name: 'AllTasks'})"
+                class="list-group-item d-flex align-items-center">
                 <span class="material-icons">event</span>
                 <div class="p-1">Todas as Tarefas</div>
-            </li> <li  class="list-group-item d-flex align-items-center">
+            </li> 
+            <li  class="list-group-item d-flex align-items-center">
                 <span class="material-icons">check_circle</span>
                 <div class="p-1">Tarefas Finalizadas</div>
             </li>
@@ -53,7 +56,7 @@
                         class="list-group-item d-flex align-items-center">
                         <span class="material-icons">menu</span>
                         <div class="p-1">{{item.name}}</div>
-                        <small class="ml-auto p-1 text-sm w-25 text-black-50">180/425</small>
+                        <small class="ml-auto text-sm text-black-50">{{countChecked(item)}}/{{countUnchecked(item)}}</small>
                     </li>
                 </ul>
             </div>
@@ -87,7 +90,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 export default {
     name: 'Sidebar',
     data(){
@@ -96,9 +99,16 @@ export default {
         }
     },
     computed:{
-        ...mapState(['taskList','actualList', 'sidebarOpen'])
+        ...mapState(['actualList', 'sidebarOpen']),
+        ...mapGetters(['taskList','checked', 'unchecked'])      
     },
     methods:{
+        countChecked(list){
+           return this.checked(list.id).length
+        },
+        countUnchecked(list){
+           return this.unchecked(list.id).length
+        },
         goToList(list){
             this.$store.dispatch('ActionSetActualList', list)
             this.toggleSidebar()
