@@ -5,9 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+      loggedUser: {
+        name: 'Gerardo Soletra Maestrano',
+        email: 'gerardo@ggmail.com'
+      },
       actualList: {id: '1', idNotebook: 1, name: 'Mercado', color: '#000000'},
       currentNotebook: { id: 1, name: 'Pessoal'},
-      //actualTask: {idList: 1, "checked":false,"title":"Maçã","id":1603473327910,"icon":"check_box_outline_blank"},
       notebooks:[
         {id: 1, name: 'Pessoal'},
         {id: 2, name: 'Trabalho'},
@@ -18,6 +21,7 @@ export default new Vuex.Store({
         {id: 2, idNotebook: 2, name: 'Trabalho', color: '#8600b3'},
         {id: 3, idNotebook: 1, name: 'Coisas Casa', color: '#70db70'},
         {id: 4, idNotebook: 1, name: 'Lazer', color: '#997a00'},
+        {id: 5, idNotebook: 3, name: 'Concursos', color: '#babaca'},
        
       ],
       tasks: [
@@ -36,7 +40,8 @@ export default new Vuex.Store({
                 {idList: 3,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Colocar Quadros","id":1603472346271,"icon":"check_box_outline_blank"},
                 {idList: 4,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Praia","id":1603234340121,"icon":"check_box_outline_blank"},
                 {idList: 4,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Casa de Campo","id":1641776342139,"icon":"check_box_outline_blank"},
-                {idList: 4,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"andar de Bug","id":1603465746271,"icon":"check_box_outline_blank"}
+                {idList: 4,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Andar de Bug","id":1603465746271,"icon":"check_box_outline_blank"},
+                {idList: 5,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Analisar Edital","id":16034097646271,"icon":"check_box_outline_blank"}
               ],
       sidebarOpen: false
   },
@@ -65,6 +70,7 @@ export default new Vuex.Store({
     },
     addTaskList(state, payload){
       state.taskList.push(payload)
+      state.actualList = state.taskList[state.taskList.length -1]
     },
     deleteTasks(state, payload){
       var i = state.tasks.findIndex(item => item.idList === payload.id)
@@ -173,11 +179,11 @@ export default new Vuex.Store({
       
     },
     unchecked:(state) => (payload)=> {
-if (payload != null) {
-  return state.tasks.filter(item => item.checked === false && item.idList === payload)
-} else {
-  return state.tasks.filter(item => item.checked === false)
-}
+      if (payload != null) {
+        return state.tasks.filter(item => item.checked === false && item.idList === payload)
+      } else {
+        return state.tasks.filter(item => item.checked === false)
+      }
      
     },
     currentTask:(state) => (payload) =>{

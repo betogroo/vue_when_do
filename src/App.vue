@@ -18,6 +18,6 @@ export default {
 
 <style lang="scss">
   #app{
-    height: 100vh;
+    height: calc(100vh - 53px);
   }
 </style>

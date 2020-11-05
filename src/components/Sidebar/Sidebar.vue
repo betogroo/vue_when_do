@@ -12,13 +12,13 @@
             </div>
                 <div class="text-light ml-2">
                     <small>Conta do Google Tasks</small><br>
-                    <small>luizhumberto@gmail.com</small>
+                    <small>{{loggedUser.email}}</small>
             </div>
            </div>
-           <div class="d-flex align-self-end justify-content-end">
+           <div class="align-self-end justify-content-end ml-auto pr-2">
             <span
                 @click="toggleSidebarAcounts"
-                class="material-icons">
+                class="material-icons-outlined">
                 {{sidebarAcountsOpen ? 'arrow_drop_up' : 'arrow_drop_down' }}
             </span>
            </div>
@@ -26,24 +26,42 @@
         </div>
         <template v-if="sidebarAcountsOpen">
             <ul 
-                class="list-unstyled font-weight-bold">
-                <li class="text-reset">luizhumberto@gmail.com</li>
-                <li class="text-reset">Conta Local</li>
-                <li class="text-reset">Adicionar Conta</li>
+                class="list-group list-group-flush mt-2">
+                <li class="list-group-item active d-flex align-items-center">
+                    <span class="material-icons md-dark">person</span>
+                    <div>
+                        {{loggedUser.email}}
+                    </div>
+                    
+                </li>
+                <li class="d-flex list-group-item align-items-center">
+                <span class="material-icons md-dark">person</span>
+                    Conta Local
+                </li>
+            </ul>
+                <hr>
+            <ul 
+                class="list-group list-group-flush">
+                <li class="d-flex list-group-item align-items-center">
+                    <span class="material-icons md-dark">add</span>
+                    Adicionar Conta
+                </li>
             </ul>
         </template>
         <template v-else>
         <ul 
-            class="list-group list-group-flush">
+            class="list-group list-group-flush mt-2">
              <li
-                @click="$router.push({name: 'AllTasks'})"
+                @click="goToAllTasks"
                 class="list-group-item d-flex align-items-center">
                 <span class="material-icons">event</span>
                 <div class="p-1">Todas as Tarefas</div>
+                <div class="text-muted ml-auto">{{countChecked(null)}}/{{countUnchecked(null)}}</div>
             </li> 
             <li  class="list-group-item d-flex align-items-center">
                 <span class="material-icons">check_circle</span>
                 <div class="p-1">Tarefas Finalizadas</div>
+                <div class="text-muted ml-auto">{{countChecked(null)}}</div>
             </li>
         </ul>
             <hr>
@@ -56,7 +74,7 @@
                         class="list-group-item d-flex align-items-center">
                         <span class="material-icons">menu</span>
                         <div class="p-1">{{item.name}}</div>
-                        <small class="ml-auto text-sm text-black-50">{{countChecked(item)}}/{{countUnchecked(item)}}</small>
+                        <small class="ml-auto text-sm text-black-50">{{countChecked(item.id)}}/{{countUnchecked(item.id)}}</small>
                     </li>
                 </ul>
             </div>
@@ -99,19 +117,38 @@ export default {
         }
     },
     computed:{
-        ...mapState(['actualList', 'sidebarOpen']),
+        ...mapState(['actualList', 'sidebarOpen', 'loggedUser']),
         ...mapGetters(['taskList','checked', 'unchecked'])      
     },
     methods:{
         countChecked(list){
-           return this.checked(list.id).length
+           return this.checked(list).length
         },
         countUnchecked(list){
-           return this.unchecked(list.id).length
+           return this.unchecked(list).length
         },
         goToList(list){
-            this.$store.dispatch('ActionSetActualList', list)
             this.toggleSidebar()
+            this.$store.dispatch('ActionSetActualList', list)
+            if (this.$route.name != 'Home') {
+                setTimeout(()=>{
+                this.$router.push({name: 'Home'})
+            }, 500) 
+            }
+            
+           
+           
+        },
+        goToAllTasks(){
+            this.toggleSidebar()
+            if (this.$route.name != 'AllTasks') {
+                setTimeout(()=>{
+                this.$router.push({name: 'AllTasks'})
+            }, 500) 
+            }
+            
+            
+            
         },
         editLists(){
             this.toggleSidebar()
@@ -148,8 +185,7 @@ export default {
        background-color: white;
        position: fixed;
        left: -300px;
-       //top: 60;
-       height: calc(100vh - 30px);
+       height: calc(100vh - 1px);
        overflow-y: auto;
        transition: all 0.5s ease-out;
        opacity: .5;
@@ -171,6 +207,14 @@ export default {
    .siderbar-header{
        height: 100px;
        border-bottom: 2px solid rgba($color: gray, $alpha:.5);
-       
    }
+    .list-group-item{
+        padding: 0.5rem!important;
+    }
+    .list-group-item.active{
+        padding: 0.5rem!important;
+        color: black;
+        background-color: lightgray;
+        border-color: lightgray
+    }
 </style>

@@ -19,7 +19,6 @@
        @deleteTask="deleteTask"
       @check="check"
       :items="unchecked"
-      :listColor= this.actualList.color
     />
     <div 
     v-if="checked.length > 0"
@@ -30,7 +29,6 @@
       @deleteTask="deleteTask"
       @check="check"
       :items="checked"
-      :listColor= this.actualList.color
     />
     </div>
    <div 
@@ -40,6 +38,7 @@
         control_point
       </span>
    </div>
+
   </div>
 
 </template>

@@ -1,11 +1,11 @@
 <template>
   <ul class="list-group list-group-flush">
       <li
-        :style="`border-left: 5px solid ${listColor};`"
-        v-for="item in items" :key="item.id"
+        v-for="item in items" :key="'task_'+ item.id"
+        :style="`border-left: 5px solid ${cor(item)}`"
         class="list-group-item d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
-            <span @click="check(item)" class="material-icons">{{item.icon}}</span>
+            <span @click="check(item)" class="material-icons-outlined">{{item.icon}}</span>
             <span
                 @click="viewTask(item)" 
                 class="ml-2"
@@ -23,16 +23,19 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
     name: 'Tasks',
     data(){
         return{
-            list:{color: 'purple'}
+            list:{color: 'purple'},
         }
     },
+    computed:{
+        ...mapState(['taskList'])
+    },
     props: {
-        items: Array,
-        listColor: String
+        items: Array
     },
     methods: {
         check(item){
@@ -44,6 +47,9 @@ export default {
         },
         deleteTask(item){
             this.$emit('deleteTask', item)
+        },
+        cor(i){
+            return this.taskList.find(item => item.id === i.idList).color
         }
     }
 }

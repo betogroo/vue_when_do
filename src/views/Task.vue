@@ -14,7 +14,7 @@
             <div>
                 <span 
                     @click="check(currentTask)"
-                    class="material-icons mr-1">{{currentTask.icon}}</span>
+                    class="material-icons-outlined mr-1">{{currentTask.icon}}</span>
                 <span 
                     @click="togglePriority(currentTask)"
                     :class="{'text-danger' : currentTask.priority}"

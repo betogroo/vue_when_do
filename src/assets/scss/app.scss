@@ -1,13 +1,20 @@
 @import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-@import '../../../node_modules/material-design-icons/iconfont/material-icons.css';
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined');
 
 *{
+    body{
+        padding-top: 53px
+    }
     font-family: 'Roboto', sans-serif;
-    .material-icons{
+    .material-icons-outlined, .material-icons {
+        
         cursor: pointer;
     }
+    /* .material-icons{
+        cursor: pointer;
+    } */
     .task-options{
         padding: .50rem;
         margin: .30rem;
