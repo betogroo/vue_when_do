@@ -52,13 +52,15 @@
         <ul 
             class="list-group list-group-flush mt-2">
              <li
-                @click="goToAllTasks"
+                @click="allTasks"
                 class="list-group-item d-flex align-items-center">
                 <span class="material-icons">event</span>
                 <div class="p-1">Todas as Tarefas</div>
                 <div class="text-muted ml-auto">{{countChecked(null)}}/{{countUnchecked(null)}}</div>
             </li> 
-            <li  class="list-group-item d-flex align-items-center">
+            <li  
+                @click="doneTasks"
+                class="list-group-item d-flex align-items-center">
                 <span class="material-icons">check_circle</span>
                 <div class="p-1">Tarefas Finalizadas</div>
                 <div class="text-muted ml-auto">{{countChecked(null)}}</div>
@@ -139,16 +141,21 @@ export default {
            
            
         },
-        goToAllTasks(){
+        allTasks(){
             this.toggleSidebar()
             if (this.$route.name != 'AllTasks') {
                 setTimeout(()=>{
-                this.$router.push({name: 'AllTasks'})
-            }, 500) 
+                    this.$router.push({name: 'AllTasks'})
+                }, 500) 
             }
-            
-            
-            
+        },
+        doneTasks(){
+            this.toggleSidebar()
+            if (this.$route.name != 'DoneTasks') {
+                setTimeout(()=>{
+                    this.$router.push({name: 'DoneTasks'})
+                }, 500) 
+            }
         },
         editLists(){
             this.toggleSidebar()
@@ -184,6 +191,7 @@ export default {
        width: 300px;
        background-color: white;
        position: fixed;
+       top: 0;
        left: -300px;
        height: calc(100vh - 1px);
        overflow-y: auto;

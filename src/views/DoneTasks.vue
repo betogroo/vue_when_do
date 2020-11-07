@@ -8,26 +8,39 @@
    
     <Navbar
       :navOptions="true"
-      title="Todas as Tarefas"
+      title="Tarefas Finalizadas"
       toggleIcon = "menu"
       @toggleAction="toggleSidebar"
       :items="itemsMenu"
       @search="search"
     />
-    <CollapseTasks
-      title="SEM DATA"
-      taskList="unchecked" 
+    
+    <a @click.prevent="toggleCollapseChecked()" class="done-title d-flex align-items-center dropright" data-toggle="collapse" href="#unchecked">
+        <span class="material-icons">{{collapseCheckedIcon ? 'chevron_right': 'expand_more'}}</span>
+        <div class="ml-2">SEM DATA</div>
+    </a>
+    
+    <div class="tasks">
+       <Tasks
+        class="collapse"
+        id="unchecked"
+       @deleteTask="deleteTask"
       @check="check"
-      @deleteTask="deleteTask"
-      :taskItems="unchecked"
+      :items="unchecked"
     />
-    <CollapseTasks
-      title="FINALIZADOS"
-      taskList="checked" 
+  <a @click.prevent="toggleCollapseUnchecked()" class="done-title d-flex align-items-center" data-toggle="collapse" href="#checked">
+        <span class="material-icons">{{collapseUncheckedIcon ? 'chevron_right': 'expand_more'}}</span>
+        <div class="ml-2">CONCLUÍDOS</div>
+    </a>
+  <Tasks
+      class="collapse"
+      id="checked"
+       @deleteTask="deleteTask"
       @check="check"
-      @deleteTask="deleteTask"
-      :taskItems="checked"
+      :items="checked"
+      :listColor= this.actualList.color
     />
+    </div>
    <div 
     @click="addTask"
     class="add-task">
@@ -41,8 +54,7 @@
 
 <script>
 
-
-import CollapseTasks from '@/components/CollapseTasks'
+import Tasks from '@/components/Tasks'
 import Navbar from '@/components/Nav/Navbar'
 import Backdrop from '@/components/Nav/Backdrop'
 import Sidebar from '@/components/Sidebar/Sidebar'
@@ -51,18 +63,26 @@ export default {
   name: 'Home',
 data(){
   return{
+    collapseUncheckedIcon: true,
+    collapseCheckedIcon: true,
     itemsMenu:[
       {icon: 'search', action:'search'}
     ]
   }
 },
   components: {
-    Navbar, Backdrop, Sidebar, CollapseTasks
+    Navbar, Tasks, Backdrop, Sidebar
   },
   methods: {
     ...mapActions(['ActionCheck', 'ActionToggleSidebar']),
     toggleSidebar(){
       this.ActionToggleSidebar()
+    },
+    toggleCollapseUnchecked(){
+      this.collapseUncheckedIcon = !this.collapseUncheckedIcon
+    },
+    toggleCollapseChecked(){
+      this.collapseCheckedIcon = !this.collapseCheckedIcon
     },
    check(task){
      this.ActionCheck(task)

@@ -55,6 +55,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    
+    .fixed-top{
+        z-index: 900;
+    }
    
 </style>

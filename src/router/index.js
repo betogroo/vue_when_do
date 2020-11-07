@@ -24,7 +24,15 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "akktasksk" */ '../views/AllTasks.vue')
+    component: () => import(/* webpackChunkName: "alltasks" */ '../views/AllTasks.vue')
+  },
+  {
+    path: '/donetasks',
+    name: 'DoneTasks',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "donetasks" */ '../views/DoneTasks.vue')
   },
   {
     path: '/addlist',
