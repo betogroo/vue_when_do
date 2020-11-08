@@ -10,18 +10,13 @@
         @editTask="editTask"
         @move="move"
     />
-    <div class="task-options d-flex justify-content-between align-items-center">
-            <div>
-                <span 
-                    @click="check(currentTask)"
-                    class="material-icons-outlined mr-1">{{currentTask.icon}}</span>
-                <span 
-                    @click="togglePriority(currentTask)"
-                    :class="{'text-danger' : currentTask.priority}"
-                    class="material-icons ml-1">error_outline</span>
-            </div>
-            <button class="btn btn-sm btn-outline-secondary">Prazo, Lembrete Repetir</button>
-        </div>
+   
+        <TaskOptions
+            mode="edit"
+            :currentTask="currentTask"
+            @check="check"
+            @togglePriority="togglePriority"
+        />
         <input type="text" class="form-control m-1 text-dark" id="taskName" v-model="currentTask.title">
             <hr class="m-1 p-0">
         <input type="text" class="form-control m-1" id="taskNotes" v-model="currentTask.note" placeholder="Notas">
@@ -34,12 +29,13 @@
 <script>
 
 import Navbar from '@/components/Nav/Navbar.vue'
+import TaskOptions from '@/components/TaskOptions.vue'
 import { mapState } from 'vuex'
 
 export default {
     name: 'Task',
     components: {
-        Navbar
+        Navbar, TaskOptions
     },
     data(){
         return{

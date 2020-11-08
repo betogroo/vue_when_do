@@ -1,5 +1,6 @@
 <template>
   <div>
+      <SelectListModal />
       <Backdrop
         v-if="sidebarOpen"
         />
@@ -42,7 +43,7 @@
     />
     </div>
    <div 
-    @click="addTask"
+    data-toggle="modal" data-target="#SelectListModal"
     class="add-task">
      <span class="material-icons md-48 text-primary">
         control_point
@@ -56,6 +57,7 @@
 
 import Tasks from '@/components/Tasks'
 import Navbar from '@/components/Nav/Navbar'
+import SelectListModal from '@/components/SelectListModal'
 import Backdrop from '@/components/Nav/Backdrop'
 import Sidebar from '@/components/Sidebar/Sidebar'
 import {mapActions,  mapGetters, mapState} from 'vuex'
@@ -71,7 +73,7 @@ data(){
   }
 },
   components: {
-    Navbar, Tasks, Backdrop, Sidebar
+    Navbar, Tasks, Backdrop, Sidebar, SelectListModal
   },
   methods: {
     ...mapActions(['ActionCheck', 'ActionToggleSidebar']),

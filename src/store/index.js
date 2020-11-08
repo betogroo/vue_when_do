@@ -25,23 +25,23 @@ export default new Vuex.Store({
        
       ],
       tasks: [
-                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Maçã","id":1603473327910,"icon":"check_box_outline_blank"},
-                {idList: 1,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"Banana","id":1603473332177,"icon":"check_box"},
-                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Manga","id":1603473336494,"icon":"check_box_outline_blank"},
-                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Pera","id":1603412327910,"icon":"check_box_outline_blank"},
-                {idList: 1,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"Uva","id":1603473332327,"icon":"check_box"},
-                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Melancia","id":1656473336494,"icon":"check_box_outline_blank"},
-                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Abóbora","id":1603476327910,"icon":"check_box_outline_blank"},
-                {idList: 1,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"leite","id":1603473892177,"icon":"check_box"},
-                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Pão","id":1603473337894,"icon":"check_box_outline_blank"},
-                {idList: 2,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Movimentações","id":1606789342139,"icon":"check_box_outline_blank"},
-                {idList: 2,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Capturas","id":1603234346271,"icon":"check_box_outline_blank"},
-                {idList: 3,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Pintar parede","id":1603476342139,"icon":"check_box_outline_blank"},
-                {idList: 3,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Colocar Quadros","id":1603472346271,"icon":"check_box_outline_blank"},
-                {idList: 4,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Praia","id":1603234340121,"icon":"check_box_outline_blank"},
-                {idList: 4,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Casa de Campo","id":1641776342139,"icon":"check_box_outline_blank"},
-                {idList: 4,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Andar de Bug","id":1603465746271,"icon":"check_box_outline_blank"},
-                {idList: 5,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Analisar Edital","id":16034097646271,"icon":"check_box_outline_blank"}
+                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Maçã","id":1603473327910},
+                {idList: 1,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"Banana","id":1603473332177},
+                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Manga","id":1603473336494},
+                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Pera","id":1603412327910},
+                {idList: 1,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"Uva","id":1603473332327},
+                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Melancia","id":1656473336494},
+                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Abóbora","id":1603476327910},
+                {idList: 1,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"leite","id":1603473892177},
+                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Pão","id":1603473337894},
+                {idList: 2,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Movimentações","id":1606789342139},
+                {idList: 2,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Capturas","id":1603234346271},
+                {idList: 3,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Pintar parede","id":1603476342139},
+                {idList: 3,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Colocar Quadros","id":1603472346271},
+                {idList: 4,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Praia","id":1603234340121},
+                {idList: 4,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Casa de Campo","id":1641776342139},
+                {idList: 4,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Andar de Bug","id":1603465746271},
+                {idList: 5,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Analisar Edital","id":16034097646271}
               ],
       sidebarOpen: false
   },
@@ -89,8 +89,8 @@ export default new Vuex.Store({
     check(state, payload){ //mudar nome
       const i = state.tasks.findIndex(item => item.id === payload.id)
       const checked = !state.tasks[i].checked
-      const icon = checked ? 'check_box' : 'check_box_outline_blank'
-      Vue.set(state.tasks, i, {  ...state.tasks[i], checked, icon })
+      //const icon = checked ? 'check_box' : 'check_box_outline_blank'
+      Vue.set(state.tasks, i, {  ...state.tasks[i], checked })
     },
     togglePriority(state, payload){
      const i = state.tasks.findIndex(item => item.id === payload.id)
@@ -140,7 +140,6 @@ export default new Vuex.Store({
         setTimeout(()=>{
           payload.idList = parseInt(state.actualList.id)
           payload.id = Date.now()
-          payload.icon = 'check_box_outline_blank'
           commit('addTask', payload)
         }, 300)
       })

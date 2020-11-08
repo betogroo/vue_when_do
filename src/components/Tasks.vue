@@ -2,10 +2,10 @@
   <ul class="list-group list-group-flush">
       <li
         v-for="item in items" :key="'task_'+ item.id"
-        :style="`border-left: 5px solid ${cor(item)}`"
+        :style="`border-left: 5px solid ${taskColor(item)}`"
         class="list-group-item d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
-            <span @click="check(item)" class="material-icons-outlined">{{item.icon}}</span>
+            <span @click="check(item)" class="material-icons-outlined">{{item.checked ? 'check_box' : 'check_box_outline_blank'}}</span>
             <span
                 @click="viewTask(item)" 
                 class="ml-2"
@@ -48,7 +48,7 @@ export default {
         deleteTask(item){
             this.$emit('deleteTask', item)
         },
-        cor(i){
+        taskColor(i){
             return this.taskList.find(item => item.id === i.idList).color
         }
     }
@@ -62,5 +62,8 @@ export default {
     }
     .priority{
         color: red;    
+    }
+    .list-group-item{
+        padding: 0.1rem, 0.5rem!important;
     }
 </style>

@@ -9,7 +9,10 @@
             :navOptions="true"
             :payload="task"
         />
-      <div class="task-options"></div>
+      <TaskOptions
+        mode="add"
+        @togglePriority="togglePriority"
+    />
         <form @submit.prevent="addTask(task, option)">
             <input 
                 v-model="task.title"
@@ -24,17 +27,18 @@
 
 <script>
 import Navbar from '@/components/Nav/Navbar'
+import TaskOptions from '@/components/TaskOptions'
 import { mapState } from 'vuex'
 export default {
     name: 'AddTask',
-    components: { Navbar },
+    components: { Navbar, TaskOptions },
     data(){
         return{
             itemsMenu:[
                 {icon: 'done_all', action: 'addTask', addMore: true},
                 {icon: 'done', action: 'addTask'}
             ],
-            task: { checked: false}
+            task: { checked: false, priority: false}
         }
     },
     computed:{
@@ -44,6 +48,9 @@ export default {
         }
     },
     methods:{
+        togglePriority(item){
+            this.task.priority = item
+        },
         addTask(task, option){
             this.$store.dispatch('ActionAddTask', task, option)
             this.task = {checked:false}

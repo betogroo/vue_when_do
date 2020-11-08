@@ -1,5 +1,6 @@
 <template>
   <div>
+  <SelectListModal />
       <Backdrop
         v-if="sidebarOpen"
         />
@@ -29,7 +30,7 @@
       :taskItems="checked"
     />
    <div 
-    @click="addTask"
+    data-toggle="modal" data-target="#SelectListModal"
     class="add-task">
      <span class="material-icons md-48 text-primary">
         control_point
@@ -43,6 +44,7 @@
 
 
 import CollapseTasks from '@/components/CollapseTasks'
+import SelectListModal from '@/components/SelectListModal'
 import Navbar from '@/components/Nav/Navbar'
 import Backdrop from '@/components/Nav/Backdrop'
 import Sidebar from '@/components/Sidebar/Sidebar'
@@ -57,7 +59,7 @@ data(){
   }
 },
   components: {
-    Navbar, Backdrop, Sidebar, CollapseTasks
+    Navbar, Backdrop, Sidebar, CollapseTasks, SelectListModal
   },
   methods: {
     ...mapActions(['ActionCheck', 'ActionToggleSidebar']),
