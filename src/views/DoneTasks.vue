@@ -16,32 +16,13 @@
       @search="search"
     />
     
-    <a @click.prevent="toggleCollapseChecked()" class="done-title d-flex align-items-center dropright" data-toggle="collapse" href="#unchecked">
-        <span class="material-icons">{{collapseCheckedIcon ? 'chevron_right': 'expand_more'}}</span>
-        <div class="ml-2">SEM DATA</div>
-    </a>
-    
-    <div class="tasks">
-       <Tasks
-        class="collapse"
-        id="unchecked"
-       @deleteTask="deleteTask"
+   <CollapseTasks v-for="item in checked" :key="item.list.id"
+      :title="item.list.name"
+      :taskList="`checked_${item.list.id}`" 
       @check="check"
-      :items="unchecked"
-    />
-  <a @click.prevent="toggleCollapseUnchecked()" class="done-title d-flex align-items-center" data-toggle="collapse" href="#checked">
-        <span class="material-icons">{{collapseUncheckedIcon ? 'chevron_right': 'expand_more'}}</span>
-        <div class="ml-2">CONCLUÍDOS</div>
-    </a>
-  <Tasks
-      class="collapse"
-      id="checked"
-       @deleteTask="deleteTask"
-      @check="check"
-      :items="checked"
-      :listColor= this.actualList.color
-    />
-    </div>
+      @deleteTask="deleteTask"
+      :taskItems="item.task"
+    />    
    <div 
     data-toggle="modal" data-target="#SelectListModal"
     class="add-task">
@@ -55,12 +36,12 @@
 
 <script>
 
-import Tasks from '@/components/Tasks'
+import CollapseTasks from '@/components/CollapseTasks'
 import Navbar from '@/components/Nav/Navbar'
 import SelectListModal from '@/components/SelectListModal'
 import Backdrop from '@/components/Nav/Backdrop'
 import Sidebar from '@/components/Sidebar/Sidebar'
-import {mapActions,  mapGetters, mapState} from 'vuex'
+import {mapActions, mapState} from 'vuex'
 export default {
   name: 'Home',
 data(){
@@ -73,7 +54,7 @@ data(){
   }
 },
   components: {
-    Navbar, Tasks, Backdrop, Sidebar, SelectListModal
+    Navbar, Backdrop, Sidebar, SelectListModal, CollapseTasks
   },
   methods: {
     ...mapActions(['ActionCheck', 'ActionToggleSidebar']),
@@ -103,13 +84,14 @@ data(){
     }
   },
   computed :{
-    ...mapState(['tasks', 'actualList', 'sidebarOpen']),
-    ...mapGetters(['checked', 'unchecked']),
+    ...mapState(['tasks', 'actualList', 'sidebarOpen', 'taskList']),
     checked(){
-      return this.$store.getters['checked'](null)
-    },
-    unchecked(){
-      return this.$store.getters['unchecked'](null)
+      return this.taskList.map( item =>{
+        return{
+          list: {id: item.id, name: item.name},
+          task: this.$store.getters['checked'](item.id)
+        }
+      }).filter(item =>item.task.length > 0)
     }
     
   }

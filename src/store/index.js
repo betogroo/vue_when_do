@@ -5,6 +5,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+      config: 
+        {confirmDelete: true}
+      ,
       loggedUser: {
         name: 'Gerardo Soletra Maestrano',
         email: 'gerardo@ggmail.com'
@@ -17,35 +20,38 @@ export default new Vuex.Store({
         {id: 3, name: 'Freelance'}
       ],
       taskList: [
-        {id: 1, idNotebook: 1, name: 'Mercado', color: '#000000'},
-        {id: 2, idNotebook: 2, name: 'Trabalho', color: '#8600b3'},
-        {id: 3, idNotebook: 1, name: 'Coisas Casa', color: '#70db70'},
-        {id: 4, idNotebook: 1, name: 'Lazer', color: '#997a00'},
-        {id: 5, idNotebook: 3, name: 'Concursos', color: '#babaca'},
+        {id: 3265987, idNotebook: 1, name: 'Mercado', color: '#000000'},
+        {id: 1234567, idNotebook: 2, name: 'Trabalho', color: '#8600b3'},
+        {id: 1478523, idNotebook: 1, name: 'Coisas Casa', color: '#70db70'},
+        {id: 9632587, idNotebook: 1, name: 'Lazer', color: '#997a00'},
+        {id: 7946135, idNotebook: 3, name: 'Concursos', color: '#babaca'},
        
       ],
       tasks: [
-                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Maçã","id":1603473327910},
-                {idList: 1,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"Banana","id":1603473332177},
-                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Manga","id":1603473336494},
-                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Pera","id":1603412327910},
-                {idList: 1,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"Uva","id":1603473332327},
-                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Melancia","id":1656473336494},
-                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Abóbora","id":1603476327910},
-                {idList: 1,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"leite","id":1603473892177},
-                {idList: 1,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Pão","id":1603473337894},
-                {idList: 2,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Movimentações","id":1606789342139},
-                {idList: 2,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Capturas","id":1603234346271},
-                {idList: 3,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Pintar parede","id":1603476342139},
-                {idList: 3,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Colocar Quadros","id":1603472346271},
-                {idList: 4,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Praia","id":1603234340121},
-                {idList: 4,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Casa de Campo","id":1641776342139},
-                {idList: 4,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Andar de Bug","id":1603465746271},
-                {idList: 5,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Analisar Edital","id":16034097646271}
+                {idList: 3265987,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Maçã","id":1603473327910},
+                {idList: 3265987,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"Banana","id":1603473332177},
+                {idList: 3265987,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Manga","id":1603473336494},
+                {idList: 3265987,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Pera","id":1603412327910},
+                {idList: 3265987,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"Uva","id":1603473332327},
+                {idList: 3265987,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Melancia","id":1656473336494},
+                {idList: 3265987,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Abóbora","id":1603476327910},
+                {idList: 3265987,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"leite","id":1603473892177},
+                {idList: 3265987,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Pão","id":1603473337894},
+                {idList: 1234567,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Movimentações","id":1606789342139},
+                {idList: 1234567,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"Capturas","id":1603234346271},
+                {idList: 1478523,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Pintar parede","id":1603476342139},
+                {idList: 1478523,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"Colocar Quadros","id":1603472346271},
+                {idList: 9632587,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Praia","id":1603234340121},
+                {idList: 9632587,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Casa de Campo","id":1641776342139},
+                {idList: 9632587,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"Andar de Bug","id":1603465746271},
+                {idList: 7946135,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Analisar Edital","id":16034097646271}
               ],
       sidebarOpen: false
   },
   mutations: {
+    toggleConfirmDelete(state){
+      state.config.confirmDelete = !state.config.confirmDelete
+    },
     toggleSidebar(state){
       state.sidebarOpen = !state.sidebarOpen
     },
@@ -108,6 +114,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    ActionToggleConfirmDelete({ commit }){
+      commit('toggleConfirmDelete')
+    },
     ActionToggleSidebar({ commit }){
       commit('toggleSidebar')
     },
@@ -191,6 +200,9 @@ export default new Vuex.Store({
     },
     taskList: state => {
       return state.taskList.filter(item => item.idNotebook === parseInt(state.currentNotebook.id))
+    },
+    countLists: (state) => (payload) =>{
+      return state.taskList.filter( item => item.idNotebook === parseInt(payload.id)).length
     }
   },
   modules: {}

@@ -45,7 +45,9 @@ export default {
 
 <style lang="scss" scoped>
   .done-title{
-    //padding: 0.15rem !important;
+    padding-top: 0.20rem !important;
+    padding-bottom: 0.20rem !important;
+    margin-bottom: 0.10rem !important;
     background-color: lightgray;
     text-decoration: none;
     color: gray

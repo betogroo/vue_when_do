@@ -52,14 +52,14 @@
         <ul 
             class="list-group list-group-flush mt-2">
              <li
-                @click="allTasks"
+                @click="goToView('AllTasks')"
                 class="list-group-item d-flex align-items-center">
                 <span class="material-icons">event</span>
                 <div class="p-1">Todas as Tarefas</div>
                 <div class="text-muted ml-auto">{{countChecked(null)}}/{{countUnchecked(null)}}</div>
             </li> 
             <li  
-                @click="doneTasks"
+                @click="goToView('DoneTasks')"
                 class="list-group-item d-flex align-items-center">
                 <span class="material-icons">check_circle</span>
                 <div class="p-1">Tarefas Finalizadas</div>
@@ -82,11 +82,11 @@
             </div>
             <hr>
         <ul class="list-group list-group-flush mr-2">
-            <li @click="editLists" class="list-group-item d-flex align-items-center">
+            <li @click="goToView('EditLists')" class="list-group-item d-flex align-items-center">
                 <span class="material-icons">edit</span>
                 <div class="p-1">Editar Listas</div>
             </li>
-            <li @click="editNotebook" class="list-group-item d-flex align-items-center">
+            <li @click="goToView('Notebooks')" class="list-group-item d-flex align-items-center">
                 <span class="material-icons">folder</span>
                 <div class="p-1">Gerenciar Cadernos</div>
             </li>
@@ -95,7 +95,9 @@
                 <span class="material-icons">lock_open</span>
                 <div class="p-1">Atualiza para pró</div>
             </li>
-             <li  class="list-group-item d-flex align-items-center">
+             <li 
+                @click="goToView('Config')"
+                class="list-group-item d-flex align-items-center">
                 <span class="material-icons">settings</span>
                 <div class="p-1">Configurações</div>
             </li>
@@ -136,40 +138,15 @@ export default {
                 setTimeout(()=>{
                 this.$router.push({name: 'Home'})
             }, 500) 
-            }
-            
-           
-           
+            }      
         },
-        allTasks(){
+        goToView(view){
             this.toggleSidebar()
-            if (this.$route.name != 'AllTasks') {
+            if (this.$route.name != view) {
                 setTimeout(()=>{
-                    this.$router.push({name: 'AllTasks'})
+                    this.$router.push({name: view})
                 }, 500) 
             }
-        },
-        doneTasks(){
-            this.toggleSidebar()
-            if (this.$route.name != 'DoneTasks') {
-                setTimeout(()=>{
-                    this.$router.push({name: 'DoneTasks'})
-                }, 500) 
-            }
-        },
-        editLists(){
-            this.toggleSidebar()
-            setTimeout(()=>{
-                this.$router.push({name: 'EditLists'})
-                
-            }, 500)  
-        },
-        editNotebook(){
-            this.toggleSidebar()
-            setTimeout(()=>{
-                this.$router.push({name: 'Notebooks'})
-                
-            }, 500)  
         },
         toggleSidebarAcounts(){
             this.sidebarAcountsOpen = !this.sidebarAcountsOpen

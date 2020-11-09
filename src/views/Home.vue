@@ -75,7 +75,11 @@ data(){
       this.$router.push('AddTask')
     },
     deleteTask(task){
-      this.$store.dispatch('ActionDeleteTask', task)
+      if (this.config.confirmDelete) {
+        alert('E ai mano')
+      } else {
+        this.$store.dispatch('ActionDeleteTask', task)
+      }
     },
     search(){
       this.$router.push({name: 'SearchTask'})
@@ -85,7 +89,7 @@ data(){
     }
   },
   computed :{
-    ...mapState(['tasks', 'actualList', 'sidebarOpen']),
+    ...mapState(['tasks', 'actualList', 'sidebarOpen', 'config']),
     ...mapGetters(['checked', 'unchecked']),
     checked(){
       return this.$store.getters['checked'](parseInt(this.actualList.id))

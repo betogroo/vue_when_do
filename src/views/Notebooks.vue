@@ -20,7 +20,7 @@
         <div
           @click="setNotebook(item)"
           class="ml-2">{{item.name}}</div>
-        <div class="ml-auto text-muted">14</div>
+        <div class="ml-auto text-muted">{{countLists(item)}}</div>
       </li>
     </ul>
   </div>
@@ -49,6 +49,9 @@ export default {
       setNotebook(notebook){
          this.$store.dispatch('ActionSetCurrentNotebook', notebook)
           this.$router.push({name: 'EditLists'})
+      },
+      countLists(list){
+        return this.$store.getters['countLists'](list)
       }
     },
     computed:{
