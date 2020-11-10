@@ -53,7 +53,7 @@ export default {
         },
         addTask(task, option){
             this.$store.dispatch('ActionAddTask', task, option)
-            this.task = {checked:false}
+            this.task = {checked:false, priority: false}
             if (!option) {
                 this.$router.push({name: 'Home'})
             }

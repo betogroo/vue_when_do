@@ -1,5 +1,11 @@
 <template>
   <div>
+    <DeleteModal
+          title="Tarefa" 
+          @deleteCurrentItem="deleteCurrentTask"
+          @resetCurrentItem="resetCurrentTask"
+          :item="currentTask"
+        />
       <SelectListModal />
       <Backdrop
         v-if="sidebarOpen"
@@ -39,6 +45,7 @@
 import CollapseTasks from '@/components/CollapseTasks'
 import Navbar from '@/components/Nav/Navbar'
 import SelectListModal from '@/components/SelectListModal'
+import DeleteModal from '@/components/DeleteModal'
 import Backdrop from '@/components/Nav/Backdrop'
 import Sidebar from '@/components/Sidebar/Sidebar'
 import {mapActions, mapState} from 'vuex'
@@ -54,7 +61,7 @@ data(){
   }
 },
   components: {
-    Navbar, Backdrop, Sidebar, SelectListModal, CollapseTasks
+    Navbar, Backdrop, Sidebar, SelectListModal, CollapseTasks, DeleteModal
   },
   methods: {
     ...mapActions(['ActionCheck', 'ActionToggleSidebar']),
@@ -76,6 +83,13 @@ data(){
     deleteTask(task){
       this.$store.dispatch('ActionDeleteTask', task)
     },
+    deleteCurrentTask(task){
+      this.$store.dispatch('ActionDeleteTask', task)
+      this.resetCurrentTask()
+    },
+    resetCurrentTask(){
+      this.$store.dispatch('ActionSetCurrentTask', {})
+    },
     search(){
       this.$router.push({name: 'SearchTask'})
     },
@@ -84,7 +98,7 @@ data(){
     }
   },
   computed :{
-    ...mapState(['tasks', 'actualList', 'sidebarOpen', 'taskList']),
+    ...mapState(['tasks', 'currentTask', 'actualList', 'sidebarOpen', 'taskList']),
     checked(){
       return this.taskList.map( item =>{
         return{

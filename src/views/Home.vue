@@ -1,23 +1,11 @@
 <template>
   <div>
-
-        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="confirmDeleteModalLabel">Excluir Tarefa?</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                    Tem certeza que deseja excluir esta tarefa?
-                    </div>
-                    <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button @click="deleteTask(deletedTask)" type="button" data-dismiss="modal" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-                </div>
-            </div>
+        <DeleteModal
+          title="Tarefa" 
+          @deleteCurrentItem="deleteCurrentTask"
+          @resetCurrentItem="resetCurrentTask"
+          :item="currentTask"
+        />
       <Backdrop
         v-if="sidebarOpen"
         />
@@ -69,6 +57,7 @@ import Tasks from '@/components/Tasks'
 import Navbar from '@/components/Nav/Navbar'
 import Backdrop from '@/components/Nav/Backdrop'
 import Sidebar from '@/components/Sidebar/Sidebar'
+import DeleteModal from '@/components/DeleteModal'
 import HeaderBar from '@/components/HeaderBar'
 import {mapActions,  mapGetters, mapState} from 'vuex'
 export default {
@@ -82,7 +71,7 @@ data(){
   }
 },
   components: {
-    Navbar, Tasks, Backdrop, Sidebar, HeaderBar
+    Navbar, Tasks, Backdrop, Sidebar, HeaderBar, DeleteModal
   },
   methods: {
     ...mapActions(['ActionCheck', 'ActionToggleSidebar']),
@@ -98,8 +87,12 @@ data(){
     deleteTask(task){
         this.$store.dispatch('ActionDeleteTask', task)
     },
-    setDeletedTask(item){
-      this.deletedTask = item
+    deleteCurrentTask(task){
+      this.$store.dispatch('ActionDeleteTask', task)
+      this.resetCurrentTask()
+    },
+    resetCurrentTask(){
+      this.$store.dispatch('ActionSetCurrentTask', {})
     },
     search(){
       this.$router.push({name: 'SearchTask'})
@@ -109,7 +102,7 @@ data(){
     }
   },
   computed :{
-    ...mapState(['tasks', 'actualList', 'sidebarOpen', 'config']),
+    ...mapState(['tasks', 'currentTask', 'actualList', 'sidebarOpen', 'config']),
     ...mapGetters(['checked', 'unchecked']),
     checked(){
       return this.$store.getters['checked'](parseInt(this.actualList.id))

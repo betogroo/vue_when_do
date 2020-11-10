@@ -23,7 +23,7 @@
             </span>
             <span
                 v-else
-                @click.prevent="setDeletedItem(item)"
+                @click.prevent="setCurrentTask(item)"
                 data-toggle="modal" data-target="#confirmDeleteModal"
                 class="material-icons">delete
             </span>
@@ -59,8 +59,8 @@ export default {
         deleteTask(item){
             this.$emit('deleteTask', item)
         },
-        setDeletedItem(item){
-            this.$emit('setDeletedTask', item)
+        setCurrentTask(item){
+            this.$store.dispatch('ActionSetCurrentTask', item)
         },
         taskColor(i){
             return this.taskList.find(item => item.id === i.idList).color

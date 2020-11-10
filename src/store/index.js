@@ -46,6 +46,7 @@ export default new Vuex.Store({
                 {idList: 9632587,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"Andar de Bug","id":1603465746271},
                 {idList: 7946135,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Analisar Edital","id":16034097646271}
               ],
+      currentTask: {},
       sidebarOpen: false
   },
   mutations: {
@@ -89,6 +90,9 @@ export default new Vuex.Store({
       const i = state.tasks.findIndex(item => item.id === payload.id)
       state.tasks.splice(i, 1)
     },
+    setCurrentTask( state, payload){
+      state.currentTask = payload
+    },
     addTask(state, payload){
       state.tasks.push(payload)
     },
@@ -131,6 +135,9 @@ export default new Vuex.Store({
     },
     ActionDeleteTask({ commit }, payload){
       commit('deleteTask', payload)
+    },
+    ActionSetCurrentTask( { commit }, payload){
+      commit('setCurrentTask', payload)
     },
     ActionEditTask({ commit }, payload){
       commit('editTask', payload)
