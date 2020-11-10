@@ -1,5 +1,23 @@
 <template>
   <div>
+
+        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Excluir Tarefa?</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    Tem certeza que deseja excluir esta tarefa?
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button @click="deleteTask(deletedTask)" type="button" data-dismiss="modal" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+                </div>
+            </div>
       <Backdrop
         v-if="sidebarOpen"
         />
@@ -17,6 +35,7 @@
     <div class="tasks">
        <Tasks
        @deleteTask="deleteTask"
+       @deletedTask="deletedTask"
       @check="check"
       :items="unchecked"
     />
@@ -27,6 +46,7 @@
     </div>
     <Tasks
       @deleteTask="deleteTask"
+      @deletedTask="deletedTask"
       @check="check"
       :items="checked"
     />
@@ -57,7 +77,8 @@ data(){
   return{
     itemsMenu:[
       {icon: 'search', action:'search'}
-    ]
+    ],
+    deletedTask: {}
   }
 },
   components: {
@@ -75,11 +96,10 @@ data(){
       this.$router.push('AddTask')
     },
     deleteTask(task){
-      if (this.config.confirmDelete) {
-        alert('E ai mano')
-      } else {
         this.$store.dispatch('ActionDeleteTask', task)
-      }
+    },
+    setDeletedTask(item){
+      this.deletedTask = item
     },
     search(){
       this.$router.push({name: 'SearchTask'})

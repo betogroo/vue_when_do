@@ -12,7 +12,7 @@ export default new Vuex.Store({
         name: 'Gerardo Soletra Maestrano',
         email: 'gerardo@ggmail.com'
       },
-      actualList: {id: '1', idNotebook: 1, name: 'Mercado', color: '#000000'},
+      actualList: {id: 3265987, idNotebook: 1, name: 'Mercado', color: '#000000'},
       currentNotebook: { id: 1, name: 'Pessoal'},
       notebooks:[
         {id: 1, name: 'Pessoal'},

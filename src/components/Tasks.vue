@@ -1,4 +1,6 @@
 <template>
+    <div>
+        
   <ul class="list-group list-group-flush">
       <li
         v-for="item in items" :key="'task_'+ item.id"
@@ -15,11 +17,20 @@
             </div>
         <div>
             <span
+                v-if="!config.confirmDelete"
                 @click="deleteTask(item)"
-                class="material-icons">delete</span>
+                class="material-icons">delete
+            </span>
+            <span
+                v-else
+                @click.prevent="setDeletedItem(item)"
+                data-toggle="modal" data-target="#confirmDeleteModal"
+                class="material-icons">delete
+            </span>
         </div>
       </li>
     </ul>
+</div>
 </template>
 
 <script>
@@ -28,11 +39,11 @@ export default {
     name: 'Tasks',
     data(){
         return{
-            list:{color: 'purple'},
+            
         }
     },
     computed:{
-        ...mapState(['taskList'])
+        ...mapState(['taskList', 'config'])
     },
     props: {
         items: Array
@@ -47,6 +58,9 @@ export default {
         },
         deleteTask(item){
             this.$emit('deleteTask', item)
+        },
+        setDeletedItem(item){
+            this.$emit('setDeletedTask', item)
         },
         taskColor(i){
             return this.taskList.find(item => item.id === i.idList).color
