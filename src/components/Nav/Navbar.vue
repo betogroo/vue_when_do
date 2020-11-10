@@ -9,10 +9,13 @@
             </div>
             <span class="navbar-brand mb-0 mr-auto ml-2 h1">{{title}}</span>
             <div class="d-flex justify-content-between">
-                <span
-                    v-for="(item, i) in items" :key="`menu_${i}`"
-                    @click="$emit(item.action, payload, item.addMore)"
-                    class="material-icons mr-2">{{item.icon}}</span>
+                <template v-for="(item, i) in items" >
+                    <span
+                        :key="`menu_${i}`"
+                        @click="$emit(item.action, payload, item.addMore)"
+                        class="material-icons mr-2">{{item.icon}}
+                    </span>
+                </template>
                 <NavOptions
                     v-if="navOptions"
                  />
@@ -43,7 +46,7 @@ export default {
         option: Boolean
     },
     computed:{
-        ...mapState(['sidebarOpen']),
+        ...mapState(['sidebarOpen', 'config']),
     },
     methods:{
         toggleAction(payload, option){
