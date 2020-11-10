@@ -11,7 +11,7 @@
                 </div>
                 <div class="modal-footer d-flex justify-content-around p-0">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" v-model="confirmDelete">
+                        <input class="form-check-input" type="checkbox" id="flexCheckDefault" v-model="confirmDelete">
                         <label class="form-check-label" for="flexCheckDefault">
                             <small>Não pergunte novamente</small>
                         </label>
