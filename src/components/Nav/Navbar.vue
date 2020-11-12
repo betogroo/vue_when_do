@@ -80,6 +80,9 @@ export default {
         },
         saveItem(item, option){
             this.$emit('saveItem', item, option)
+        },
+        addeItem(item, option){
+            this.$emit('addItem', item, option)
         }
     },
     created(){

@@ -3,8 +3,9 @@
         <Navbar 
             title="Editar Listas"
             toggleIcon="arrow_back"
-            :items="itemsMenu"
             @toggleAction="$router.push({name: 'Home'})"
+
+            :items="itemsMenu"
             @addList="addList"
         />
     <div class="task-options">
