@@ -62,9 +62,9 @@ export default new Vuex.Store({
     },
     editTaskList(state, payload){
       const i = state.taskList.findIndex(item => item.id === payload.id)
-      state.taskList[i] = {
-        name: payload.name, color: payload.color, test: i
-      }
+      const name = payload.name
+      const color =  payload.color
+      Vue.set(state.taskList, i, {...state.taskList[i], name, color})
     },
     editTask(state, payload){
       const i = state.tasks.findIndex(item => item.id === payload.id)
@@ -108,6 +108,9 @@ export default new Vuex.Store({
     },
     setActualList(state, payload){
       state.actualList = state.taskList.find(item => item.id === payload.id)
+    },
+    resetActualList(state){
+      state.actualList = null
     },
     setActualTask(state, payload){
       state.actualTask = state.tasks.find(item => item.id === payload.id)
@@ -175,6 +178,9 @@ export default new Vuex.Store({
     },
     ActionSetActualList( { commit }, payload){
       commit('setActualList', payload)
+    },
+    ActionResetActualList( { commit }){
+      commit('resetActualList')
     },
     ActionSetActualTask({ commit }, payload){
       commit('setActualTask', payload)

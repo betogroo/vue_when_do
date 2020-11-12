@@ -21,24 +21,30 @@
                     @saveItem = "saveItem"
                     :item="item"
                 />
-                <NavSave
-                    v-if="$route.meta.navSave"
-                    @saveItem = "saveItem"
-                    :item="item"
-                />
                 <NavMove
                     v-if="$route.meta.navMove"
+                    @moveItem = "moveItem"
+                    :item="item"
                 />
                 <NavDelete
                     v-if="$route.meta.navDelete"
                     @deleteItem = "deleteItem"
                 />
-                
-                <NavOptions
-                    v-if="$route.meta.navOptions"
-                 />
+                 <NavSave
+                    v-if="$route.meta.navSave"
+                    @saveItem = "saveItem"
+                    :item="item"
+                />
+                <NavAdd 
+                    v-if="$route.meta.navAdd"
+                    @addItem="addItem"
+                />
                 <NavMic
                     v-if="$route.meta.navMic"
+                 />
+                 <NavOptions
+                    v-if="$route.meta.navOptions"
+                    
                  />
             </div>
         </div>
@@ -53,12 +59,13 @@ import NavDelete from './NavDelete'
 import NavMove from './NavMove'
 import NavSaveMore from './NavSaveMore'
 import NavSave from './NavSave'
+import NavAdd from './NavAdd'
 import NavMic from './NavMic'
 
 export default {
    name: 'Navbar',
     components: {
-        NavOptions, NavDelete, NavMic, NavMove, NavSaveMore, NavSave
+        NavOptions, NavDelete, NavMic, NavMove, NavSaveMore, NavSave, NavAdd
     },
     props: {
         title: String,
@@ -81,16 +88,15 @@ export default {
         saveItem(item, option){
             this.$emit('saveItem', item, option)
         },
-        addeItem(item, option){
-            this.$emit('addItem', item, option)
+        addItem(){
+            this.$emit('addItem')
+        },
+        moveItem(item){
+            this.$emit('moveItem', item)
         }
-    },
-    created(){
-        console.log(this.$route)
     }
-    
 }
-</script>S
+</script>
 
 <style lang="scss" scoped>
     .fixed-top{

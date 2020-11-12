@@ -12,6 +12,7 @@
             :item="currentTask"
             @deleteItem="deleteTask"
             @saveItem="saveTask"
+            @moveItem="moveTask"
     />
    
         <TaskOptions
@@ -56,8 +57,10 @@ export default {
         },
         saveTask(task){
             this.$store.dispatch('ActionEditTask', task)
-            this.$router.push({name: 'Home'})
-            
+            this.$router.push({name: 'Home'}) 
+        },
+        moveTask(task){
+            alert(`Vai mover a tarefa ${task.title}`)
         }
     }
 

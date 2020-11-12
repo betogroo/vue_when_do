@@ -4,9 +4,7 @@
             title="Editar Listas"
             toggleIcon="arrow_back"
             @toggleAction="$router.push({name: 'Home'})"
-
-            :items="itemsMenu"
-            @addList="addList"
+            @addItem= "addList"
         />
     <div class="task-options">
         <div class="d-flex bd-highlight p-1">
@@ -49,13 +47,6 @@ import { mapGetters } from 'vuex'
 export default {
     name:'EditTask',
     components: { Navbar },
-    data(){
-        return{
-            itemsMenu: [
-                {icon: 'add', action:'addList'}
-            ]
-        }
-    },
     computed :{
         //...mapState(['taskList'])
         ...mapGetters(['taskList', 'checked', 'unchecked'])

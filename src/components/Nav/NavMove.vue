@@ -1,7 +1,7 @@
 <template>
     <div>
         <span 
-            @click="moveItem"
+            @click="moveItem(item)"
             class="material-icons mr-2">redo</span>
         </div>
 </template>
@@ -10,9 +10,12 @@
 
 export default {
     name: 'NavMove',
+    props:{
+        item: Object
+    },
     methods:{
-        moveItem(){
-            alert('Vai mover o item para outro item')
+        moveItem(item){
+            this.$emit('moveItem', item)
         }
     }
 }

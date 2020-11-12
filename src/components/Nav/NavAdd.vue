@@ -9,10 +9,10 @@
 <script>
 
 export default {
-    name: 'NavMic',
+    name: 'NavAdd',
     methods:{
         addItem(){
-            alert('Pesquisa por voz')
+            this.$emit('addItem')
         }
     }
 }

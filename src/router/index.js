@@ -60,7 +60,10 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "addlist" */ '../views/AddList.vue')
+    component: () => import(/* webpackChunkName: "addlist" */ '../views/AddList.vue'),
+    meta:{
+      navSave: true
+    }
   },
   {
     path: '/addnotebook',
@@ -76,7 +79,12 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "editlist" */ '../views/EditList.vue')
+    component: () => import(/* webpackChunkName: "editlist" */ '../views/EditList.vue'),
+    meta:{
+      navMove: true,
+      navDelete: true,
+      navSave: true
+    }
   },
   {
     path: '/task/:id',
@@ -110,7 +118,7 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "editlists" */ '../views/EditLists.vue'),
     meta:{
-      addNav: true
+      navAdd: true
     }
   },
   {
