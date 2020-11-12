@@ -99,7 +99,6 @@ export default new Vuex.Store({
     check(state, payload){ //mudar nome
       const i = state.tasks.findIndex(item => item.id === payload.id)
       const checked = !state.tasks[i].checked
-      //const icon = checked ? 'check_box' : 'check_box_outline_blank'
       Vue.set(state.tasks, i, {  ...state.tasks[i], checked })
     },
     togglePriority(state, payload){

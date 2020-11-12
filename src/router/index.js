@@ -1,14 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
+   {
     path: '/',
     name: 'Home',
-    component: Home
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
+    meta:{
+      navOptions: true,
+      navSearch: true
+    }
   },
   {
     path: '/addtask',
@@ -16,7 +23,12 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "addtask" */ '../views/AddTask.vue')
+    component: () => import(/* webpackChunkName: "addtask" */ '../views/AddTask.vue'),
+    meta:{
+      navSaveMore: true,
+      navSave: true,
+      navOptions: true
+    }
   },
   {
     path: '/alltasks',
@@ -24,7 +36,11 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "alltasks" */ '../views/AllTasks.vue')
+    component: () => import(/* webpackChunkName: "alltasks" */ '../views/AllTasks.vue'),
+    meta:{
+      navOptions: true,
+      navSearch: true
+    }
   },
   {
     path: '/donetasks',
@@ -32,7 +48,11 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "donetasks" */ '../views/DoneTasks.vue')
+    component: () => import(/* webpackChunkName: "donetasks" */ '../views/DoneTasks.vue'),
+    meta:{
+      navOptions: true,
+      navSearch: true
+    }
   },
   {
     path: '/addlist',
@@ -64,7 +84,12 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "task" */ '../views/Task.vue')
+    component: () => import(/* webpackChunkName: "task" */ '../views/Task.vue'),
+    meta:{
+      navDelete: true,
+      navMove: true,
+      navSave: true
+    }
   },
   {
     path: '/searchtask',
@@ -72,7 +97,10 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "searchtask" */ '../views/SearchTask.vue')
+    component: () => import(/* webpackChunkName: "searchtask" */ '../views/SearchTask.vue'),
+    meta:{
+      navMic: true
+    }
   },
   {
     path: '/editlists',

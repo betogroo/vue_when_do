@@ -28,7 +28,7 @@
 
 <script>
 export default {
-    name: 'OrderModal'
+    name: 'SortModal'
 }
 </script>
 

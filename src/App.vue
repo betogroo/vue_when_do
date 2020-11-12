@@ -1,18 +1,13 @@
 <template>
   <div id="app">
-    <OrderModal />
     <router-view/>
   </div>
 </template>
 
 <script>
 
-import OrderModal from '@/components/OrderModal'
 export default {
-  name: 'App',
-  components: {
-    OrderModal
-  }
+  name: 'App'
 }
 </script>
 

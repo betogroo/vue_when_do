@@ -4,22 +4,19 @@
             :title="actualList.name"
             toggleIcon="close"
             @toggleAction="$router.back()"
-            @addTask="addTask"
-            :items="itemsMenu"
-            :navOptions="true"
-            :payload="task"
+            @saveItem="saveTask"
+            :item="task"
         />
       <TaskOptions
-        mode="add"
         @togglePriority="togglePriority"
     />
-        <form @submit.prevent="addTask(task, option)">
+        <form>
             <input 
                 v-model="task.title"
                 type="text" class="form-control m-1" id="formGroupExampleInput" placeholder="Título">
             <hr>
             <input 
-                v-model="task.notes"
+                v-model="task.note"
                 type="text" class="form-control m-1" id="formGroupExampleInput2" placeholder="Notas">
         </form>
   </div>
@@ -34,26 +31,20 @@ export default {
     components: { Navbar, TaskOptions },
     data(){
         return{
-            itemsMenu:[
-                {icon: 'done_all', action: 'addTask', addMore: true},
-                {icon: 'done', action: 'addTask'}
-            ],
             task: { checked: false, priority: false}
         }
     },
     computed:{
-        ...mapState(['actualList']),
-        tasks(){
-            return this.$store.state.tasks
-        }
+        ...mapState(['actualList'])
     },
     methods:{
         togglePriority(item){
             this.task.priority = item
         },
-        addTask(task, option){
+        saveTask(task, option){
             this.$store.dispatch('ActionAddTask', task, option)
             this.task = {checked:false, priority: false}
+            console.log(task)
             if (!option) {
                 this.$router.push({name: 'Home'})
             }

@@ -1,36 +1,19 @@
 <template>
   <div>
-      <NavSearch
+      <Navbar
+            toggleIcon="arrow_back"
+            @toggleAction="$router.back()"
+
       />
-     
+     <h1>Página de Busca</h1>
   </div>
 </template>
 
 <script>
-import NavSearch from '@/components/Nav/NavSearch'
+import Navbar from '@/components/Nav/Navbar'
 export default {
-    name: 'AddTask',
-    components: { NavSearch },
-    data(){
-        return{
-            task: { checked: false}
-        }
-    },
-    computed:{
-        tasks(){
-            return this.$store.state.tasks
-        }
-    },
-    methods:{
-        addTask(task, more){
-            this.$store.dispatch('ActionAddTask', task)
-            this.task = {checked:false}
-                if (!more) {
-                    this.$router.push({name: 'Home'})
-                }
-            
-        }
-    }
+    name: 'SearchTask',
+    components: { Navbar }
 }
 </script>
 

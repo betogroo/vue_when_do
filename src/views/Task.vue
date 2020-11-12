@@ -1,18 +1,20 @@
 <template>
   <div>
+    <DeleteModal 
+        title="Tarefa"
+        @deleteCurrentItem="deleteTask"
+        :item="currentTask"
+    />
     <Navbar
-        :title="currentTask.title"
-        toggleIcon = "close"
-        @toggleAction="$router.back()"
-        :items="itemsMenu"
-        :payload="currentTask"
-        @deleteTask="deleteTask"
-        @editTask="editTask"
-        @move="move"
+            :title="actualList.name"
+            toggleIcon = "close"
+            @toggleAction="$router.back()"
+            :item="currentTask"
+            @deleteItem="deleteTask"
+            @saveItem="saveTask"
     />
    
         <TaskOptions
-            mode="edit"
             :currentTask="currentTask"
             @check="check"
             @togglePriority="togglePriority"
@@ -29,28 +31,17 @@
 <script>
 
 import Navbar from '@/components/Nav/Navbar.vue'
+import DeleteModal from '@/components/DeleteModal.vue'
 import TaskOptions from '@/components/TaskOptions.vue'
 import { mapState } from 'vuex'
 
 export default {
     name: 'Task',
     components: {
-        Navbar, TaskOptions
-    },
-    data(){
-        return{
-            itemsMenu:[
-        {icon: 'redo', action:'move'},
-        {icon: 'delete', action:'deleteTask'},
-        {icon: 'check', action:'editTask'}
-        ]
-        }
+        Navbar, TaskOptions, DeleteModal
     },
     computed: {
-    ...mapState(['actualTask']),
-    currentTask(){
-        return this.$store.getters['currentTask'](parseInt(this.$route.params.id))
-    }
+    ...mapState(['currentTask', 'actualList'])
     },
     methods: {
        check(task){
@@ -59,16 +50,14 @@ export default {
        togglePriority(task){
             this.$store.dispatch('ActionTogglePriority', task)
         },
-        deleteTask(task){
-            this.$store.dispatch('ActionDeleteTask', task)
+        deleteTask(){
+            this.$store.dispatch('ActionDeleteTask', this.currentTask)
             this.$router.push({name: 'Home'})
         },
-        editTask(task){
+        saveTask(task){
             this.$store.dispatch('ActionEditTask', task)
             this.$router.push({name: 'Home'})
-        },
-        move(task){
-            alert(`Vai mover a tarefa:${task.title}` )
+            
         }
     }
 

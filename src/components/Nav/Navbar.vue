@@ -16,8 +16,29 @@
                         class="material-icons mr-2">{{item.icon}}
                     </span>
                 </template>
+                <NavSaveMore
+                    v-if="$route.meta.navSaveMore"
+                    @saveItem = "saveItem"
+                    :item="item"
+                />
+                <NavSave
+                    v-if="$route.meta.navSave"
+                    @saveItem = "saveItem"
+                    :item="item"
+                />
+                <NavMove
+                    v-if="$route.meta.navMove"
+                />
+                <NavDelete
+                    v-if="$route.meta.navDelete"
+                    @deleteItem = "deleteItem"
+                />
+                
                 <NavOptions
-                    v-if="navOptions"
+                    v-if="$route.meta.navOptions"
+                 />
+                <NavMic
+                    v-if="$route.meta.navMic"
                  />
             </div>
         </div>
@@ -28,34 +49,45 @@
 <script>
 import { mapState } from 'vuex'
 import NavOptions from './NavOptions'
+import NavDelete from './NavDelete'
+import NavMove from './NavMove'
+import NavSaveMore from './NavSaveMore'
+import NavSave from './NavSave'
+import NavMic from './NavMic'
 
 export default {
    name: 'Navbar',
     components: {
-        NavOptions
+        NavOptions, NavDelete, NavMic, NavMove, NavSaveMore, NavSave
     },
     props: {
         title: String,
         toggleIcon: String,
         items: Array,
-        navOptions: {
-            type: Boolean,
-            default: false
-        },
         payload: Object,
+        item: Object,
         option: Boolean
     },
     computed:{
         ...mapState(['sidebarOpen', 'config']),
     },
     methods:{
-        toggleAction(payload, option){
-            this.$emit('toggleAction', payload, option)
+        toggleAction(payload){
+            this.$emit('toggleAction', payload)
+        },
+        deleteItem(){
+            this.$emit('deleteItem')
+        },
+        saveItem(item, option){
+            this.$emit('saveItem', item, option)
         }
+    },
+    created(){
+        console.log(this.$route)
     }
     
 }
-</script>
+</script>S
 
 <style lang="scss" scoped>
     .fixed-top{

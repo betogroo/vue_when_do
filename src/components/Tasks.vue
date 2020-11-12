@@ -1,6 +1,5 @@
 <template>
     <div>
-        
   <ul class="list-group list-group-flush">
       <li
         v-for="item in items" :key="'task_'+ item.id"
@@ -53,14 +52,14 @@ export default {
             this.$emit('check', item)
         },
         viewTask(task){
-            this.$store.dispatch('ActionSetActualTask', task)
+            this.setCurrentTask(task)
             this.$router.push({name: 'Task', params:{id: task.id}})
         },
         deleteTask(item){
             this.$emit('deleteTask', item)
         },
-        setCurrentTask(item){
-            this.$store.dispatch('ActionSetCurrentTask', item)
+        setCurrentTask(task){
+            this.$store.dispatch('ActionSetCurrentTask', task)
         },
         taskColor(i){
             return this.taskList.find(item => item.id === i.idList).color

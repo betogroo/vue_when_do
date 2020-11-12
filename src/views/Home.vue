@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div> <SortModal />
         <DeleteModal
           title="Tarefa" 
           @deleteCurrentItem="deleteCurrentTask"
@@ -12,18 +12,15 @@
         <Sidebar 
         />
     <Navbar
-      :navOptions="true"
-      :title="actualList.name"
-      toggleIcon = "menu"
-      @toggleAction="toggleSidebar"
-      :items="itemsMenu"
-      @search="search"
+        :title="actualList.name"
+        toggleIcon = "menu"
+        @toggleAction="toggleSidebar"
+        @search="goToSearchTask"
     />
    <HeaderBar />
     <div class="tasks">
        <Tasks
        @deleteTask="deleteTask"
-       @deletedTask="deletedTask"
       @check="check"
       :items="unchecked"
     />
@@ -34,7 +31,6 @@
     </div>
     <Tasks
       @deleteTask="deleteTask"
-      @deletedTask="deletedTask"
       @check="check"
       :items="checked"
     />
@@ -46,7 +42,6 @@
         control_point
       </span>
    </div>
-
   </div>
 
 </template>
@@ -54,6 +49,7 @@
 <script>
 
 import Tasks from '@/components/Tasks'
+import SortModal from '@/components/SortModal'
 import Navbar from '@/components/Nav/Navbar'
 import Backdrop from '@/components/Nav/Backdrop'
 import Sidebar from '@/components/Sidebar/Sidebar'
@@ -62,16 +58,8 @@ import HeaderBar from '@/components/HeaderBar'
 import {mapActions,  mapGetters, mapState} from 'vuex'
 export default {
   name: 'Home',
-data(){
-  return{
-    itemsMenu:[
-      {icon: 'search', action:'search'}
-    ],
-    deletedTask: {}
-  }
-},
   components: {
-    Navbar, Tasks, Backdrop, Sidebar, HeaderBar, DeleteModal
+    Navbar, Tasks, Backdrop, Sidebar, HeaderBar, DeleteModal, SortModal
   },
   methods: {
     ...mapActions(['ActionCheck', 'ActionToggleSidebar']),
@@ -94,7 +82,7 @@ data(){
     resetCurrentTask(){
       this.$store.dispatch('ActionSetCurrentTask', {})
     },
-    search(){
+    goToSearchTask(){
       this.$router.push({name: 'SearchTask'})
     },
     procurar(){
