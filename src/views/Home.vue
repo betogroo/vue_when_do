@@ -15,7 +15,7 @@
         :title="actualList.name"
         toggleIcon = "menu"
         @toggleAction="toggleSidebar"
-        @search="goToSearchTask"
+        @searchItem="searchTask"
     />
    <HeaderBar />
     <div class="tasks">
@@ -35,13 +35,10 @@
       :items="checked"
     />
     </div>
-   <div 
-    @click="addTask"
-    class="add-task">
-     <span class="material-icons md-48 text-primary">
-        control_point
-      </span>
-   </div>
+   <AddFloater
+      @addItem="addTask"
+      :openModal="false"
+  />
   </div>
 
 </template>
@@ -55,11 +52,12 @@ import Backdrop from '@/components/Nav/Backdrop'
 import Sidebar from '@/components/Sidebar/Sidebar'
 import DeleteModal from '@/components/DeleteModal'
 import HeaderBar from '@/components/HeaderBar'
+import AddFloater from '@/components/AddFloater'
 import {mapActions,  mapGetters, mapState} from 'vuex'
 export default {
   name: 'Home',
   components: {
-    Navbar, Tasks, Backdrop, Sidebar, HeaderBar, DeleteModal, SortModal
+    Navbar, Tasks, Backdrop, Sidebar, HeaderBar, DeleteModal, SortModal, AddFloater
   },
   methods: {
     ...mapActions(['ActionCheck', 'ActionToggleSidebar']),
@@ -82,7 +80,7 @@ export default {
     resetCurrentTask(){
       this.$store.dispatch('ActionSetCurrentTask', {})
     },
-    goToSearchTask(){
+    searchTask(){
       this.$router.push({name: 'SearchTask'})
     },
     procurar(){
@@ -112,10 +110,5 @@ export default {
     background-color: lightgray;
     color: gray
   }
-  .add-task{
-    margin: 20px;
-    position: fixed;
-    bottom: 0;
-    right: 0;
-  }
+  
 </style>

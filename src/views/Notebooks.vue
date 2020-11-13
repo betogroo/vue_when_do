@@ -4,8 +4,7 @@
       toggleIcon="arrow_back"
       title="Gerenciar Cadernos"
       @toggleAction="$router.back()"
-      :items="itemsMenu"
-      @addNotebook="addNotebook"
+      @addItem="addNotebook"
     />
     
     <ul class="list-group">
@@ -32,13 +31,6 @@ import { mapState } from 'vuex'
 export default {
     name:'EditTask',
     components: { Navbar },
-    data(){
-      return{
-        itemsMenu:[
-          {icon: 'add', action: 'addNotebook'}
-        ]
-      }
-    },
     methods:{
       addNotebook(){
         this.$router.push({name: 'AddNotebook'})
@@ -47,8 +39,8 @@ export default {
         alert(`Vai para os detalhes do Caderno ${notebook.name}`)
       },
       setNotebook(notebook){
-         this.$store.dispatch('ActionSetCurrentNotebook', notebook)
-          this.$router.push({name: 'EditLists'})
+        this.$store.dispatch('ActionSetCurrentNotebook', notebook)
+        this.$router.push({name: 'EditLists'})
       },
       countLists(list){
         return this.$store.getters['countLists'](list)

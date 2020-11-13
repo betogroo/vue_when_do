@@ -1,21 +1,25 @@
 <template>
   <div>
     <nav class="navbar bg-primary text-light fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-toggler">
-                <span
-                    @click="toggleAction"
-                    class="material-icons">{{toggleIcon}}</span>
-            </div>
-            <span class="navbar-brand mb-0 mr-auto ml-2 h1">{{title}}</span>
-            <div class="d-flex justify-content-between">
-                <template v-for="(item, i) in items" >
+        <div class="container-fluid d-flex p-0">
+            <div class="d-flex align-items-center">
+                <div class="navbar-toggler">
                     <span
-                        :key="`menu_${i}`"
-                        @click="$emit(item.action, payload, item.addMore)"
-                        class="material-icons mr-2">{{item.icon}}
+                        @click="toggleAction"
+                        class="material-icons">{{toggleIcon}}</span>
+                </div>
+                <template v-if="$route.meta.navSearchForm" >
+                    <NavSearchForm />
+                </template>
+                
+                <template v-else>
+                    <span class="navbar-brand mb-0 mr-auto ml-2 h1">{{title}}
                     </span>
                 </template>
+            </div>
+            
+            
+            <div class="d-flex align-items-center navbar-toggler">
                 <NavSaveMore
                     v-if="$route.meta.navSaveMore"
                     @saveItem = "saveItem"
@@ -39,6 +43,10 @@
                     v-if="$route.meta.navAdd"
                     @addItem="addItem"
                 />
+                <NavSearch
+                    v-if="$route.meta.navSearch"
+                    @searchItem="searchItem"
+                />
                 <NavMic
                     v-if="$route.meta.navMic"
                  />
@@ -54,18 +62,20 @@
 
 <script>
 import { mapState } from 'vuex'
-import NavOptions from './NavOptions'
-import NavDelete from './NavDelete'
-import NavMove from './NavMove'
-import NavSaveMore from './NavSaveMore'
-import NavSave from './NavSave'
-import NavAdd from './NavAdd'
-import NavMic from './NavMic'
+import NavOptions from './Command/NavOptions'
+import NavDelete from './Command/NavDelete'
+import NavMove from './Command/NavMove'
+import NavSaveMore from './Command/NavSaveMore'
+import NavSave from './Command/NavSave'
+import NavAdd from './Command/NavAdd'
+import NavSearch from './Command/NavSearch'
+import NavSearchForm from './Command/NavSearchForm'
+import NavMic from './Command/NavMic'
 
 export default {
    name: 'Navbar',
     components: {
-        NavOptions, NavDelete, NavMic, NavMove, NavSaveMore, NavSave, NavAdd
+        NavOptions, NavDelete, NavMic, NavMove, NavSaveMore, NavSave, NavAdd, NavSearch, NavSearchForm
     },
     props: {
         title: String,
@@ -93,6 +103,9 @@ export default {
         },
         moveItem(item){
             this.$emit('moveItem', item)
+        },
+        searchItem(){
+            this.$emit('searchItem')
         }
     }
 }
@@ -102,5 +115,8 @@ export default {
     .fixed-top{
         z-index: 900;
     }
+.command{
+    padding: 0.25rem;
+}
    
 </style>

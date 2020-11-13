@@ -3,7 +3,6 @@
       <Navbar
             toggleIcon="arrow_back"
             @toggleAction="$router.back()"
-
       />
      <h1>Página de Busca</h1>
   </div>

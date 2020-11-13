@@ -6,10 +6,10 @@
             <div class="modal-body">
 
                 <div 
-                v-for=" item in taskList" :key="item.id"
+                v-for=" item in items" :key="item.id"
                 class="form-check">
                     <input 
-                        @click="setTaskList(item)" data-dismiss="modal"
+                        @click="setItem(item)" data-dismiss="modal"
                         class="form-check-input" type="radio" name="taskList" :id="item.name" >
                     <label class="form-check-label" for="flexRadioDefault1">{{item.name}}</label>
                 </div>
@@ -21,21 +21,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 export default {
-    name: 'SelectListModal',
-    data(){
-        return{
-            select: ''
-        }
-    },
-    computed:{
-        ...mapState(['taskList'])
-    },
+    name: 'SelectItemModal',
+    props: { items: Array },
     methods:{
-        setTaskList(item){
-            this.$store.dispatch('ActionSetActualList', item)
-            this.$router.push({name: 'AddTask'})
+        setItem(item){
+            this.$emit('setItem', item)
         }
     }
 }

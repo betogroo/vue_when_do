@@ -6,7 +6,10 @@
           @resetCurrentItem="resetCurrentTask"
           :item="currentTask"
         />
-  <SelectListModal />
+      <SelectItemModal 
+        :items="taskList"
+        @setItem="setTaskList"
+      />
       <Backdrop
         v-if="sidebarOpen"
         />
@@ -14,12 +17,10 @@
         />
    
     <Navbar
-      :navOptions="true"
       title="Todas as Tarefas"
       toggleIcon = "menu"
       @toggleAction="toggleSidebar"
-      :items="itemsMenu"
-      @search="search"
+      @searchItem="searchTask"
     />
     <CollapseTasks
       title="SEM DATA"
@@ -35,13 +36,10 @@
       @deleteTask="deleteTask"
       :taskItems="checked"
     />
-   <div 
-    data-toggle="modal" data-target="#SelectListModal"
-    class="add-task">
-     <span class="material-icons md-48 text-primary">
-        control_point
-      </span>
-   </div>
+   <AddFloater 
+      @addItem="addTask"
+      :openModal="true"
+    />
   </div>
 
 </template>
@@ -50,23 +48,17 @@
 
 
 import CollapseTasks from '@/components/CollapseTasks'
-import SelectListModal from '@/components/SelectListModal'
+import SelectItemModal from '@/components/SelectItemModal'
 import DeleteModal from '@/components/DeleteModal'
+import AddFloater from '@/components/AddFloater'
 import Navbar from '@/components/Nav/Navbar'
 import Backdrop from '@/components/Nav/Backdrop'
 import Sidebar from '@/components/Sidebar/Sidebar'
 import {mapActions,  mapGetters, mapState} from 'vuex'
 export default {
   name: 'Home',
-data(){
-  return{
-    itemsMenu:[
-      {icon: 'search', action:'search'}
-    ]
-  }
-},
   components: {
-    Navbar, Backdrop, Sidebar, CollapseTasks, SelectListModal, DeleteModal
+    Navbar, Backdrop, Sidebar, CollapseTasks, SelectItemModal, DeleteModal, AddFloater
   },
   methods: {
     ...mapActions(['ActionCheck', 'ActionToggleSidebar']),
@@ -89,15 +81,16 @@ data(){
     resetCurrentTask(){
       this.$store.dispatch('ActionSetCurrentTask', {})
     },
-    search(){
+    searchTask(){
       this.$router.push({name: 'SearchTask'})
     },
-    procurar(){
-      alert('Procurar por vózes')
+    setTaskList(item){
+      this.$store.dispatch('ActionSetActualList', item)
+      this.$router.push({name: 'AddTask'})
     }
   },
   computed :{
-    ...mapState(['tasks', 'currentTask', 'actualList', 'sidebarOpen']),
+    ...mapState(['tasks', 'currentTask', 'actualList', 'sidebarOpen', 'taskList']),
     ...mapGetters(['checked', 'unchecked']),
     checked(){
       return this.$store.getters['checked'](null)
