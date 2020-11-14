@@ -90,8 +90,8 @@ export default {
     }
   },
   computed :{
-    ...mapState(['tasks', 'currentTask', 'actualList', 'sidebarOpen', 'taskList']),
-    ...mapGetters(['checked', 'unchecked']),
+    ...mapState(['tasks', 'currentTask', 'actualList', 'sidebarOpen']),
+    ...mapGetters(['checked', 'unchecked', 'taskList']),
     checked(){
       return this.$store.getters['checked'](null)
     },
