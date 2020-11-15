@@ -53,7 +53,6 @@ import Sidebar from '@/components/Sidebar/Sidebar'
 import DeleteModal from '@/components/DeleteModal'
 import HeaderBar from '@/components/HeaderBar'
 import AddFloater from '@/components/AddFloater'
-import axios from 'axios'
 import {mapActions,  mapGetters, mapState} from 'vuex'
 export default {
   name: 'Home',
@@ -97,44 +96,6 @@ export default {
     unchecked(){
       return this.$store.getters['unchecked'](parseInt(this.actualList.id))
     }
-  },
-  created(){
-    axios({
-      url: 'https://server-when-do.herokuapp.com',
-      method: 'post',
-      data: {
-        query: `
-          {
-            notebooks {
-              id
-              name
-            }
-            tasklists{
-              id
-              name
-            }
-            checked: 
-                tasks (checked: true) {
-                  id
-                  title
-                  note
-                  checked
-                  priority
-                }
-            unchecked: 
-                tasks (checked: false) {
-                  id
-                  title
-                  note
-                  checked
-                  priority
-                }
-          }
-        `
-      } 
-    }).then(res =>{
-        console.log(res.data.data)
-      })
   }
 }
 </script>
