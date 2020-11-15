@@ -30,6 +30,7 @@ export default new Vuex.Store({
       ],
       tasks: [
                 {idList: 3265987,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Maçã","id":1603473327910},
+                {idList: 3265987,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Maçã Verde","id":1600183327910},
                 {idList: 3265987,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"Banana","id":1603473332177},
                 {idList: 3265987,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Manga","id":1603473336494},
                 {idList: 3265987,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Pera","id":1603412327910},
