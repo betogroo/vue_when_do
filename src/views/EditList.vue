@@ -54,9 +54,9 @@ export default {
            this.$store.dispatch('ActionEditTaskList', taskList)
            this.$router.push({name: 'EditLists'})
        },
-       async deleteTaskList(taskList){
-           await this.$store.dispatch('ActionDeleteTaskList', taskList)
-           await this.$store.dispatch('ActionDeleteTasks', taskList)
+       deleteTaskList(){
+           this.$store.dispatch('ActionDeleteTaskList', this.actualList)
+           this.$store.dispatch('ActionDeleteTasks', this.actualList)
            this.$router.push({name: 'EditLists'})
        },
         moveTaskList(taskList){
