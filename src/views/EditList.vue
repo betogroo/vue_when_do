@@ -1,5 +1,10 @@
 <template>
   <div>
+        <SelectItemModal
+        title="Selecione o Caderno"
+        :items="notebooks"
+        @setItem="moveTaskList"
+    />
       <DeleteModal 
         title="Lista"
         @deleteCurrentItem="deleteTaskList"
@@ -35,13 +40,14 @@
 <script>
 import Navbar from '@/components/Nav/Navbar'
 import DeleteModal from '@/components/DeleteModal'
+import SelectItemModal from '@/components/SelectItemModal'
 import ColorPick from '@/components/ColorPick'
 import { mapState } from 'vuex'
 export default {
     name: 'AddTask',
-    components: { Navbar, DeleteModal, ColorPick },
+    components: { Navbar, DeleteModal, ColorPick, SelectItemModal },
     computed:{
-        ...mapState(['actualList'])
+        ...mapState(['actualList', 'notebooks'])
     },
     methods:{
        editTaskList(taskList){
@@ -54,7 +60,9 @@ export default {
            this.$router.push({name: 'EditLists'})
        },
         moveTaskList(taskList){
-            alert(`Vai mover a lista ${taskList.name}`)
+            this.$store.dispatch('ActionMoveTaskList', taskList).then(()=>{
+                this.$router.push({name: 'EditLists'})
+            })
         }
     }
    

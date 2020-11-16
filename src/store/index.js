@@ -6,6 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+      loading: false,
       config: 
         {confirmDelete: true}
       ,
@@ -30,7 +31,7 @@ export default new Vuex.Store({
       ],
       tasks: [
                 {idList: 3265987,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Maçã","id":1603473327910},
-                {idList: 3265987,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Maçã Verde","id":1600183327910},
+                {idList: 3265987,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Consertar Torneira","id":1600183327910},
                 {idList: 3265987,  "checked":true, "priority": false, "note" : "Aqui vai a nota", "title":"Banana","id":1603473332177},
                 {idList: 3265987,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Manga","id":1603473336494},
                 {idList: 3265987,  "checked":false, "priority": false, "note" : "Aqui vai a nota", "title":"Pera","id":1603412327910},
@@ -52,6 +53,9 @@ export default new Vuex.Store({
       sidebarOpen: false
   },
   mutations: {
+    setLoading(state, payload){
+      state.loading = payload
+    },
     toggleConfirmDelete(state){
       state.config.confirmDelete = !state.config.confirmDelete
     },
@@ -92,6 +96,16 @@ export default new Vuex.Store({
       const i = state.tasks.findIndex(item => item.id === payload.id)
       state.tasks.splice(i, 1)
     },
+    moveTask(state, payload){
+        const i = state.tasks.findIndex(item => item.id === state.currentTask.id)
+        const idList = payload.id
+        Vue.set(state.tasks, i, { ...state.tasks[i], idList})
+    },
+    moveTaskList(state, payload){
+        const i = state.taskList.findIndex(item => item.id === state.actualList.id)
+        const idNotebook = payload.id
+        Vue.set(state.taskList, i, { ...state.taskList[i], idNotebook})
+    },
     setCurrentTask( state, payload){
       state.currentTask = payload
     },
@@ -122,6 +136,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    ActionSetLoading( { commit }, payload){
+      commit('setLoadin', payload)
+    },
     ActionToggleConfirmDelete({ commit }){
       commit('toggleConfirmDelete')
     },
@@ -136,6 +153,12 @@ export default new Vuex.Store({
     },
     ActionDeleteTasks({ commit }, payload){
       commit('deleteTasks', payload)
+    },
+    ActionMoveTask( {commit }, payload){
+      commit('moveTask', payload)
+    },
+    ActionMoveTaskList( {commit }, payload){
+      commit('moveTaskList', payload)
     },
     ActionDeleteTask({ commit }, payload){
       commit('deleteTask', payload)
@@ -176,7 +199,7 @@ export default new Vuex.Store({
       commit('check', payload)
     },
     ActionTogglePriority({ commit }, payload){
-    commit('togglePriority', payload)
+      commit('togglePriority', payload)
     },
     ActionSetActualList( { commit }, payload){
       commit('setActualList', payload)

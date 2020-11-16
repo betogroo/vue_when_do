@@ -1,5 +1,10 @@
 <template>
   <div>
+    <SelectItemModal
+        title="Selecione a Lista"
+        :items="taskList"
+        @setItem="moveTask"
+    />
     <DeleteModal 
         title="Tarefa"
         @deleteCurrentItem="deleteTask"
@@ -12,7 +17,6 @@
             :item="currentTask"
             @deleteItem="deleteTask"
             @saveItem="saveTask"
-            @moveItem="moveTask"
     />
    
         <TaskOptions
@@ -33,16 +37,17 @@
 
 import Navbar from '@/components/Nav/Navbar.vue'
 import DeleteModal from '@/components/DeleteModal.vue'
+import SelectItemModal from '@/components/SelectItemModal.vue'
 import TaskOptions from '@/components/TaskOptions.vue'
 import { mapState } from 'vuex'
 
 export default {
     name: 'Task',
     components: {
-        Navbar, TaskOptions, DeleteModal
+        Navbar, TaskOptions, DeleteModal, SelectItemModal
     },
     computed: {
-    ...mapState(['currentTask', 'actualList'])
+    ...mapState(['currentTask', 'actualList', 'taskList'])
     },
     methods: {
        check(task){
@@ -59,8 +64,11 @@ export default {
             this.$store.dispatch('ActionEditTask', task)
             this.$router.push({name: 'Home'}) 
         },
-        moveTask(task){
-            alert(`Vai mover a tarefa ${task.title}`)
+        moveTask(taskList){
+            this.$store.dispatch('ActionMoveTask', taskList).then(() =>{
+                this.$router.push({name: 'Home'})
+            })
+            
         }
     }
 

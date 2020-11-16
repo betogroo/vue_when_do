@@ -3,7 +3,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">Excluir {{title}}?</h5>
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Excluir {{title}}?</h5>
                 <button @click="resetCurrentItem" type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

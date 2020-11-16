@@ -1,7 +1,7 @@
 <template>
     <div>
         <span 
-            @click="moveItem(item)"
+            data-toggle="modal" data-target="#SelectListModal"
             class="material-icons mr-2">redo</span>
         </div>
 </template>
