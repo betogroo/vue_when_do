@@ -8,7 +8,7 @@ export default new Vuex.Store({
   state: {
       loading: false,
       config: 
-        {confirmDelete: true}
+        {confirmDelete: false}
       ,
       loggedUser: {
         name: 'Gerardo Soletra Maestrano',
